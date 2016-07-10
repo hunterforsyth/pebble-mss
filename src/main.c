@@ -1217,7 +1217,7 @@ static void handle_battery(BatteryChargeState charge_state) {
       if (actual_battery_percent > 30){
         variable_color = 0b11000100; // 40-100 %
       } else if (actual_battery_percent > 20){
-        variable_color = 0b11110100; // 30 %          dark orange (GColorOrange)
+        variable_color = 0b11000100; // 30 %          dark orange (GColorOrange)
       } else {
         variable_color = 0b11110000; //  0 % -  20 %  red (GColorRed)
       }
@@ -1225,7 +1225,7 @@ static void handle_battery(BatteryChargeState charge_state) {
       if (actual_battery_percent > 20){
         variable_color = 0b11000100; // 30-100 %
       } else if (actual_battery_percent > 10){
-        variable_color = 0b11110100; // 20 %          dark orange (GColorOrange)
+        variable_color = 0b11000100; // 20 %          dark orange (GColorOrange)
       } else {
         variable_color = 0b11110000; //  0 % -  10 %  red (GColorRed)
       }
@@ -1298,7 +1298,7 @@ static void handle_bluetooth(bool connected) {
     text_layer_set_text(connection_layer, connected ? "Bluetooth" : "No phone");
   #endif
   #ifdef PBL_COLOR
-    if (!connected) text_layer_set_text_color(connection_layer, GColorRed); else text_layer_set_text_color(connection_layer, GColorCyan);
+    if (!connected) text_layer_set_text_color(connection_layer, GColorRed); else text_layer_set_text_color(connection_layer, GColorVividCerulean);
   #endif
   if (connected && !connected_last && initDone){
     #ifndef PBL_PLATFORM_APLITE

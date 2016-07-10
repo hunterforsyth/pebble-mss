@@ -103,7 +103,7 @@
   // --- Weather Layers: ---
 
   // Create temperature Layer
-  weather_layer_1_temp = text_layer_create(GRect(84, 11, 144-86-2, 30));
+  weather_layer_1_temp = text_layer_create(GRect(84, 9, 144-86-2, 30));
   text_layer_set_background_color(weather_layer_1_temp, GColorClear);
   text_layer_set_text_color(weather_layer_1_temp, textcolor);
   text_layer_set_text_alignment(weather_layer_1_temp, GTextAlignmentRight);
@@ -112,7 +112,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_1_temp));
 
   // Create location name Layer
-  weather_layer_3_location = text_layer_create(GRect(0, -2, 110, 17));
+  weather_layer_3_location = text_layer_create(GRect(0, -3, 110, 17));
   text_layer_set_background_color(weather_layer_3_location, GColorClear);
   text_layer_set_text_color(weather_layer_3_location, textcolor);
   text_layer_set_text_alignment(weather_layer_3_location, GTextAlignmentCenter);
@@ -121,7 +121,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_3_location));
 
   // Create last updated Layer
-  weather_layer_4_last_update = text_layer_create(GRect(111, -2, 33, 17));
+  weather_layer_4_last_update = text_layer_create(GRect(111, -3, 33, 17));
   text_layer_set_background_color(weather_layer_4_last_update, GColorClear);
   text_layer_set_text_color(weather_layer_4_last_update, textcolor);
   text_layer_set_text_alignment(weather_layer_4_last_update, GTextAlignmentCenter);
@@ -130,7 +130,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_4_last_update));
 
   // Create String_1 Layer
-  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-1, 144-86-2, 30)); //TODO
+  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-3, 144-86-2, 30)); //TODO
   text_layer_set_background_color(weather_layer_7_string_1, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_1, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_1, GTextAlignmentRight);
@@ -139,10 +139,10 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_1));
 
   // Create String_2 Layer
-  weather_layer_7_string_2 = text_layer_create(GRect(0, 50, 84, 17)); //TODO
+  weather_layer_7_string_2 = text_layer_create(GRect(0, 50, 88, 17)); //TODO
   text_layer_set_background_color(weather_layer_7_string_2, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor);
-  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentCenter);
+  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentLeft);
   text_layer_set_text(weather_layer_7_string_2, "--- / ---");
   text_layer_set_font(weather_layer_7_string_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_2));
