@@ -447,15 +447,15 @@
       textcolor_moon               = GColorWhite;
       background_color_moon        = GColorBlack;
 
-      textcolor_sun                = GColorYellow;
+      textcolor_sun                = GColorWhite;
       textcolor_con                = GColorWhite; //connection
       background_color_status      = GColorBlack;
 
       textcolor_location           = GColorWhite;
-      background_color_location    = GColorBlack;
+      background_color_location    = GColorCobaltBlue;
 
       textcolor_last_update        = GColorWhite;
-      background_color_last_update = GColorBlack;
+      background_color_last_update = GColorCobaltBlue;
 
       background_color_lines       = GColorWhite;
     }

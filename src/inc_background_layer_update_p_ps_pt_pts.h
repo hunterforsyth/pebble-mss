@@ -13,9 +13,9 @@
   graphics_context_set_stroke_color(ctx, background_color_lines);
   graphics_draw_line(ctx, GPoint(110,   0), GPoint(110,  14));
   graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
-  graphics_draw_line(ctx, GPoint( 47,  15), GPoint( 47,  49));
-  graphics_draw_line(ctx, GPoint( 85,  15), GPoint( 85,  50));
-  graphics_draw_line(ctx, GPoint(  0,  50), GPoint( 84,  50));
+  graphics_draw_line(ctx, GPoint( 49,  15), GPoint( 49,  49));
+  // graphics_draw_line(ctx, GPoint( 85,  15), GPoint( 85,  50));
+  graphics_draw_line(ctx, GPoint(  0,  50), GPoint( 49,  50));
   graphics_draw_line(ctx, GPoint(  0,  69), GPoint(168,  69));
   // graphics_draw_line(ctx, GPoint(  0,  90), GPoint(168,  90));
   graphics_draw_line(ctx, GPoint(  0, 154), GPoint(168, 154));
@@ -34,14 +34,14 @@
     graphics_context_set_stroke_color(ctx, background_color_status);
     graphics_fill_rect(ctx, GRect(0, 155, 144, 167-155+1), 0, 0);
 
-    graphics_context_set_fill_color(ctx, background_color_weather);
-    graphics_context_set_stroke_color(ctx, background_color_weather);
-    graphics_fill_rect(ctx, GRect( 0, 51, 85, 18), 0, 0);
-    graphics_fill_rect(ctx, GRect(86, 16, 58, 53), 0, 0);
+    // graphics_context_set_fill_color(ctx, background_color_weather);
+    // graphics_context_set_stroke_color(ctx, background_color_weather);
+    // graphics_fill_rect(ctx, GRect( 0, 51, 85, 18), 0, 0);
+    // graphics_fill_rect(ctx, GRect(86, 16, 58, 53), 0, 0);
 
-    graphics_context_set_fill_color(ctx, background_color_moon);
-    graphics_context_set_stroke_color(ctx, background_color_moon);
-    graphics_fill_rect(ctx, GRect(48, 16, 37, 34), 0, 0);
+    // graphics_context_set_fill_color(ctx, background_color_moon);
+    // graphics_context_set_stroke_color(ctx, background_color_moon);
+    // graphics_fill_rect(ctx, GRect(48, 16, 37, 34), 0, 0);
 
 
     if (warning_color_location == 1){
@@ -86,17 +86,17 @@
   //draw battery:
   graphics_context_set_fill_color(ctx, bkgrcolor_bat);
   graphics_context_set_stroke_color(ctx, bkgrcolor_bat);
-  GRect layer_bounds = GRect(0, 15, 84-38+1, 49-17+3);
+  GRect layer_bounds = GRect(0, 15, 84-38+3, 49-17+3);
   graphics_fill_rect(ctx, layer_bounds, 0, 0);
 
   graphics_context_set_fill_color(ctx, GColorClear);
   graphics_context_set_stroke_color(ctx, textcolor_bat);
-  graphics_draw_line(ctx, GPoint( 0+1, 0+2+17), GPoint(41+1, 0+2+17));
-  graphics_draw_line(ctx, GPoint( 0+1,14+2+17), GPoint(41+1,14+2+17));
-  graphics_draw_line(ctx, GPoint( 0+1, 0+2+17+Y_OFFSET), GPoint( 0+1,14+2+17));
+  graphics_draw_line(ctx, GPoint( 0+2, 0+2+17), GPoint(41+2, 0+2+17));
+  graphics_draw_line(ctx, GPoint( 0+2,14+2+17), GPoint(41+2,14+2+17));
+  graphics_draw_line(ctx, GPoint( 0+2, 0+2+17+Y_OFFSET), GPoint( 0+2,14+2+17));
 
-  graphics_draw_line(ctx, GPoint(41+1, 0+2+17), GPoint(41+1, 4+2+17));
-  graphics_draw_line(ctx, GPoint(41+1,10+2+17), GPoint(41+1,14+2+17));
-  graphics_draw_line(ctx, GPoint(43+1, 4+2+17), GPoint(43+1,10+2+17));
-  graphics_draw_line(ctx, GPoint(41+1, 4+2+17), GPoint(43+1, 4+2+17));
-  graphics_draw_line(ctx, GPoint(41+1,10+2+17), GPoint(43+1,10+2+17));
+  graphics_draw_line(ctx, GPoint(41+2, 0+2+17), GPoint(41+2, 4+2+17));
+  graphics_draw_line(ctx, GPoint(41+2,10+2+17), GPoint(41+2,14+2+17));
+  graphics_draw_line(ctx, GPoint(43+2, 4+2+17), GPoint(43+2,10+2+17));
+  graphics_draw_line(ctx, GPoint(41+2, 4+2+17), GPoint(43+2, 4+2+17));
+  graphics_draw_line(ctx, GPoint(41+2,10+2+17), GPoint(43+2,10+2+17));

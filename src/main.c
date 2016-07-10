@@ -981,7 +981,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
 
       if (!NightMode){
         text_layer_set_font(moonLayer_IMG, pFontClimacons);
-        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 15+Y_OFFSET, 33, 33));
+        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(58+X_OFFSET, 15+Y_OFFSET, 33, 33));
 
         weather_icon[0] = (unsigned char)wi_day_and_night;
         text_layer_set_text(moonLayer_IMG, weather_icon);
@@ -990,7 +990,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     }
   #else
     text_layer_set_font(moonLayer_IMG, pFontClimacons);
-    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 15+Y_OFFSET, 33, 33));
+    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(58+X_OFFSET, 15+Y_OFFSET, 33, 33));
 
     static int wi_counter = 33;
     wi_counter++; if (wi_counter>106) wi_counter = 33;
@@ -1188,7 +1188,7 @@ static void handle_battery(BatteryChargeState charge_state) {
 
   #ifdef PBL_PLATFORM_APLITE //only on SDK 2.x
     //GRect(41, 21, 38, 11): size of InverterLayer
-    layer_set_frame(inverter_layer_get_layer(s_battery_layer_fill), GRect(3, 21, (int)38*actual_battery_percent/100, 11));
+    layer_set_frame(inverter_layer_get_layer(s_battery_layer_fill), GRect(4, 21, (int)38*actual_battery_percent/100, 11));
     layer_set_hidden(inverter_layer_get_layer(s_battery_layer_fill), false);
     if (actual_battery_percent <= 20){
       if (!ColorProfile){
@@ -1208,24 +1208,24 @@ static void handle_battery(BatteryChargeState charge_state) {
       }
     }
   #else
-    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(3+X_OFFSET, 21+Y_OFFSET, (int)38*actual_battery_percent/100, 11));
+    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(4+X_OFFSET, 21+Y_OFFSET, (int)38*actual_battery_percent/100, 11));
     //layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(0, 0, 180, 180));
     layer_set_hidden(effect_layer_get_layer(s_battery_layer_fill), false);
 
     uint8_t variable_color = 0;
     #ifdef PBL_PLATFORM_CHALK
       if (actual_battery_percent > 30){
-        variable_color = 0b11000100; // 40-100 %
+        variable_color = 0b11000110; // 40-100 %
       } else if (actual_battery_percent > 20){
-        variable_color = 0b11000100; // 30 %          dark orange (GColorOrange)
+        variable_color = 0b11000110; // 30 %          dark orange (GColorOrange)
       } else {
         variable_color = 0b11110000; //  0 % -  20 %  red (GColorRed)
       }
     #else
       if (actual_battery_percent > 20){
-        variable_color = 0b11000100; // 30-100 %
+        variable_color = 0b11000110; // 30-100 %
       } else if (actual_battery_percent > 10){
-        variable_color = 0b11000100; // 20 %          dark orange (GColorOrange)
+        variable_color = 0b11000110; // 20 %          dark orange (GColorOrange)
       } else {
         variable_color = 0b11110000; //  0 % -  10 %  red (GColorRed)
       }
@@ -1234,7 +1234,7 @@ static void handle_battery(BatteryChargeState charge_state) {
 
     if (ColorProfile == 0) {
       textcolor_bat_uint8 = 0b11111111; //white
-      bkgrcolor_bat_uint8 = 0b11000000; //black
+      bkgrcolor_bat_uint8 = 0b11000110; //black
     } else if (ColorProfile == 1) {
       textcolor_bat_uint8 = 0b11000000; //black
       bkgrcolor_bat_uint8 = 0b11111111; //white
