@@ -13,24 +13,24 @@
 
 //(un-)comment to change initial settings
 #ifdef PBL_COLOR
-  #define INVERT_COLORS 3 //2 means colors on Basalt, and white on black on Aplite
+  #define INVERT_COLORS 0 //2 means colors on Basalt, and white on black on Aplite
 #else
   #define INVERT_COLORS 0
 #endif
 #define LIGHT_ON      1
-#define VIBE_ON_DISC 0 //disconnect
-#define VIBE_ON_FULL 0
-#define VIBE_ON_HOUR 0
-#define DEGREE_F     0
-#define DATE_FORMAT  "%a, %d.%m.%Y"
+#define VIBE_ON_DISC  1 //disconnect
+#define VIBE_ON_FULL  0
+#define VIBE_ON_HOUR  0
+#define DEGREE_F      0
+#define DATE_FORMAT   "%a, %b %d, %Y"
 
-#define WEATHER_UPDATE_INTERVAL_MINUTE 30
+#define WEATHER_UPDATE_INTERVAL_MINUTE 20
 
 //#ifndef PBL_PLATFORM_APLITE
-  #define COMPILE_WITH_SECONDS
+#define COMPILE_WITH_SECONDS
 //#endif
-#define DISPLAY_SECONDS 5
-  
+#define DISPLAY_SECONDS 0
+
 // uncomment this to show all colors of the temperature
 //#define ITERATE_TEMP
 
