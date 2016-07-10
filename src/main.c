@@ -528,7 +528,7 @@ void DisplayData(void) {
   text_layer_set_text(weather_layer_1_temp, buffer_1);
 
   #ifndef PBL_PLATFORM_APLITE
-  if ((ColorProfile >= 0) && (ColoredTemperature)){
+  if (ColoredTemperature){
     GColor textcolor_weather_int;
     if (weather_TEMP >= 40){
       textcolor_weather_int = GColorRed;  // >= 40°C
@@ -1764,17 +1764,17 @@ static void layer_update_callback_health_up_down(Layer *layer, GContext* ctx){
   graphics_context_set_stroke_color(ctx, textcolor_Steps_actual);
 
   if (health_higher_lower_than_avg > 0){
-    //TODO: paint arrow up
-    graphics_context_set_stroke_color(ctx, GColorGreen);
-    for (int i=0; i<10; i++){
-      graphics_draw_line(ctx, GPoint( 0+i/2, 10-i), GPoint(10-i/2,10-i));
-    }
+    // paint arrow up
+    graphics_context_set_stroke_color(ctx, GColorWhite);
+    graphics_draw_line(ctx, GPoint(0, 4), GPoint(3, 0));
+    graphics_draw_line(ctx, GPoint(6, 4), GPoint(3, 0));
+    graphics_draw_line(ctx, GPoint(3, 0), GPoint(3, 10));
   } else if (health_higher_lower_than_avg < 0){
-    //TODO: paint arrow down
-    graphics_context_set_stroke_color(ctx, GColorRed);
-    for (int i=0; i<10; i++){
-      graphics_draw_line(ctx, GPoint( 0+i/2, i), GPoint(10-i/2,i));
-    }
+    // paint arrow down
+    graphics_context_set_stroke_color(ctx, GColorWhite);
+    graphics_draw_line(ctx, GPoint(0, 6), GPoint(3, 10));
+    graphics_draw_line(ctx, GPoint(6, 6), GPoint(3, 10));
+    graphics_draw_line(ctx, GPoint(3, 0), GPoint(3, 10));
   }
 }
 #endif
