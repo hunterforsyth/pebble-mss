@@ -1022,7 +1022,6 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     } else { //default
       strftime(cw_text, sizeof(cw_text), TRANSLATION_CW_EN, &current_time_copy);
     }
-		text_layer_set_text(cwLayer, cw_text);
 		// ------------------- Calendar week
   }
 
@@ -1044,6 +1043,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       snprintf(buffer_9, sizeof(buffer_9), "%s, %s", hour_mode_str, time_ZONE_NAME);
     }
     text_layer_set_text(text_TimeZone_layer, buffer_9);
+    text_layer_set_text(cwLayer, buffer_9);
   }
 
 
@@ -1295,10 +1295,10 @@ static void handle_bluetooth(bool connected) {
   #ifdef PBL_PLATFORM_CHALK
     text_layer_set_text(connection_layer, connected ? "BT" : "BT");
   #else
-    text_layer_set_text(connection_layer, connected ? "Bluetooth" : "---------");
+    text_layer_set_text(connection_layer, connected ? "Bluetooth" : "No phone");
   #endif
   #ifdef PBL_COLOR
-    if (!connected) text_layer_set_text_color(connection_layer, GColorRed); else text_layer_set_text_color(connection_layer, textcolor_con);
+    if (!connected) text_layer_set_text_color(connection_layer, GColorRed); else text_layer_set_text_color(connection_layer, GColorCyan);
   #endif
   if (connected && !connected_last && initDone){
     #ifndef PBL_PLATFORM_APLITE
