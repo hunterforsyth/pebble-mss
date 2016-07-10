@@ -33,8 +33,8 @@ static char *sys_locale;
 
 
 
-static TextLayer *text_sunrise_layer; 
-static TextLayer *text_sunset_layer; 
+static TextLayer *text_sunrise_layer;
+static TextLayer *text_sunset_layer;
 static TextLayer *battery_runtime_layer;
 static TextLayer *connection_layer;
 
@@ -186,8 +186,8 @@ static void apply_color_profile(void);
 
 
 void print_time(char *s, int size_s, time_t time_diff, int mode){
-  
-  //mode = 2: 
+
+  //mode = 2:
   //    7 s
   // 1:15 m
   //   10 m
@@ -196,8 +196,8 @@ void print_time(char *s, int size_s, time_t time_diff, int mode){
   // 1:03 d
   //   10 d
   // 3000 d
-  
-  //mode = 0 (new): 
+
+  //mode = 0 (new):
   //    7 s
   // 1m 15s
   //   10 m
@@ -206,8 +206,8 @@ void print_time(char *s, int size_s, time_t time_diff, int mode){
   // 1d 03h
   //   10 d
   // 3000 d
-  
-  //mode = 1: 
+
+  //mode = 1:
   //    7 s
   //    1 m
   //   10 m
@@ -216,7 +216,7 @@ void print_time(char *s, int size_s, time_t time_diff, int mode){
   //    1 d
   //   10 d
   // 3000 d
-  
+
   int days    = time_diff / (24*3600);
   int hours   = (time_diff % (24*3600)) / 3600;
   int minutes = (time_diff % 3600) / 60;
@@ -273,66 +273,66 @@ void replace_degree(char *s, int size_s){
 
 void LoadData(void) {
   //if (persist_exists()) persist_read_string();
-  
-  
+
+
   int key = KEY_LOCATION_NAME;
   if (persist_exists(key)) persist_read_string(key, location_name, sizeof(location_name));
   key = KEY_LOCATION_LAT;
   if (persist_exists(key)) location_latitude = persist_read_int(key);
   key = KEY_LOCATION_LON;
   if (persist_exists(key)) location_longitude = persist_read_int(key);
-  
+
   key = KEY_WEATHER_TEMP;
   if (persist_exists(key)) weather_TEMP = persist_read_int(key);
-  
+
   key = KEY_WEATHER_ICON;
   if (persist_exists(key)) WeatherIcon = persist_read_int(key);
-  
+
   key = KEY_WEATHER_UPDATE_INT;
   if (persist_exists(key)) WeatherUpdateInterval = persist_read_int(key);
-  
+
   key = KEY_WEATHER_STRING_1;
   if (persist_exists(key)) persist_read_string(key, weather_string_1, sizeof(weather_string_1));
   key = KEY_WEATHER_STRING_2;
   if (persist_exists(key)) persist_read_string(key, weather_string_2, sizeof(weather_string_2));
-  
+
   key = KEY_TIME_LAST_UPDATE;
   if (persist_exists(key)) phone_last_updated = (time_t)(persist_read_int(key));
-  
+
   key = KEY_WEATHER_DATA_TIME;
   if (persist_exists(key)) station_data_last_updated = (time_t)(persist_read_int(key));
-  
+
   key = KEY_TIME_ZONE_NAME;
   if (persist_exists(key)) persist_read_string(key, time_ZONE_NAME, sizeof(time_ZONE_NAME));
-  
+
   key = KEY_SET_MOON_PHASE;
   if (persist_exists(key)) MoonPhase = persist_read_int(key);
-  
-  
-  
+
+
+
   key = KEY_BTY_LAST_PERCENT;
   if (persist_exists(key)) last_battery_percent = persist_read_int(key);
   key = KEY_BTY_PERCENT_EXIT;
   if (persist_exists(key)) battery_percent_on_exit = persist_read_int(key);
   key = KEY_BTY_LAST_CHARGED;
   if (persist_exists(key)) last_battery_charged_time = (time_t)(persist_read_int(key));
-  
+
   key = KEY_BTY_LAST_STATE;
   if (persist_exists(key)) last_charge_state = persist_read_int(key);
   key = KEY_BTY_LAST_PERIOD;
   if (persist_exists(key)) last_battery_period_time = (time_t)(persist_read_int(key));
-  
-  
+
+
   init_battery_handler = 1;
-  
+
   key = KEY_SUN_RISE_UNIX;
   if (persist_exists(key)) sun_rise_unix_loc = (time_t)(persist_read_int(key));
-  
+
   key = KEY_SUN_SET_UNIX;
   if (persist_exists(key)) sun_set_unix_loc = (time_t)(persist_read_int(key));
-  
-  
-  
+
+
+
   key = KEY_SET_INVERT_COLOR;
   if (persist_exists(key)) ColorProfile = persist_read_int(key);
   #ifndef PBL_PLATFORM_APLITE
@@ -341,42 +341,42 @@ void LoadData(void) {
       ColorProfile = 0;
     }
   #endif
-  
+
   key = KEY_SET_DEGREE_F;
   if (persist_exists(key)) degree_f = persist_read_int(key);
-  
+
   key = KEY_SET_LIGHT_ON;
   if (persist_exists(key)) LightOn = persist_read_int(key);
-  
+
   #ifdef COMPILE_WITH_SECONDS
     key = KEY_SET_DISPLAY_SEC;
     if (persist_exists(key)) DisplaySeconds = persist_read_int(key);
   #endif
-  
+
   key = KEY_SET_VIBE_DISC;
   if (persist_exists(key)) vibe_on_disconnect = persist_read_int(key);
-  
+
   key = KEY_SET_VIBE_HOUR;
   if (persist_exists(key)) vibe_on_hour = persist_read_int(key);
-  
+
   key = KEY_SET_TZ_FORMAT;
   if (persist_exists(key)) TimeZoneFormat = persist_read_int(key);
-  
+
   key = KEY_SET_HEALTH;
   if (persist_exists(key)) HealthInfo = persist_read_int(key);
-  
+
   key = KEY_SET_UPDATE_TIME;
   if (persist_exists(key)) ShowTimeSinceStationData = persist_read_int(key);
-  
+
   key = KEY_SET_DATE_FORMAT;
   if (persist_exists(key)) persist_read_string(key, date_format, sizeof(date_format));
-  
+
   key = KEY_WARN_LOCATION;
   if (persist_exists(key)) warning_color_location = persist_read_int(key);
-  
+
   key = KEY_DETECT_FIRST_START;
   if (persist_exists(key)) AppFirstStart = persist_read_int(key); else AppFirstStart = 1;
-  
+
   #ifndef PBL_PLATFORM_APLITE
     key = KEY_SET_COLORED_TMP;
     if (persist_exists(key)) ColoredTemperature = persist_read_int(key);
@@ -387,31 +387,31 @@ void SaveData(void) {
   persist_write_string (KEY_LOCATION_NAME, location_name);
   persist_write_int    (KEY_LOCATION_LAT,  location_latitude);
   persist_write_int    (KEY_LOCATION_LON,  location_longitude);
-  
+
   persist_write_int    (KEY_WEATHER_TEMP,  weather_TEMP);
   persist_write_int    (KEY_WEATHER_ICON,  WeatherIcon);
   persist_write_int    (KEY_WEATHER_UPDATE_INT, WeatherUpdateInterval);
   persist_write_string (KEY_WEATHER_STRING_1, weather_string_1);
   persist_write_string (KEY_WEATHER_STRING_2, weather_string_2);
-  
+
   persist_write_int    (KEY_TIME_LAST_UPDATE,  (int)(phone_last_updated));
   persist_write_int    (KEY_WEATHER_DATA_TIME, (int)station_data_last_updated);
   persist_write_string (KEY_TIME_ZONE_NAME, time_ZONE_NAME);
   persist_write_int    (KEY_SET_MOON_PHASE, MoonPhase);
-  
-  
-  
+
+
+
   persist_write_int    (KEY_BTY_LAST_PERCENT,  last_battery_percent);
   BatteryChargeState actual_charge = battery_state_service_peek();
   persist_write_int    (KEY_BTY_PERCENT_EXIT,  actual_charge.charge_percent);
   persist_write_int    (KEY_BTY_LAST_CHARGED,  (int)(last_battery_charged_time));
-  
+
   persist_write_int    (KEY_BTY_LAST_STATE,  last_charge_state);
   persist_write_int    (KEY_BTY_LAST_PERIOD,  (int)(last_battery_period_time));
-  
+
   persist_write_int    (KEY_SUN_RISE_UNIX,  (int)sun_rise_unix_loc);
   persist_write_int    (KEY_SUN_SET_UNIX,  (int)sun_set_unix_loc);
-  
+
   #ifndef PBL_PLATFORM_APLITE
     if (cycle_color_profile == 0)
       persist_write_int(KEY_SET_INVERT_COLOR, ColorProfile);
@@ -430,32 +430,32 @@ void SaveData(void) {
   persist_write_int(KEY_SET_HEALTH, HealthInfo);
   persist_write_string(KEY_SET_DATE_FORMAT, date_format);
   persist_write_int(KEY_SET_UPDATE_TIME, ShowTimeSinceStationData);
-    
+
   persist_write_int(KEY_WARN_LOCATION, warning_color_location);
-  
+
   persist_write_int(KEY_SET_DEGREE_F, degree_f);
-  
+
   #ifndef PBL_PLATFORM_APLITE
     persist_write_int(KEY_SET_COLORED_TMP, ColoredTemperature);
   #endif
-  
+
 }
 
 void DisplayLastUpdated(void) {
   static char last_updated_buffer[10];
   time_t now = time(NULL); // now is in UTC on SDK >= 3
-  
+
   int warning_color_last_update_old = warning_color_last_update;
-  
+
   if (ShowTimeSinceStationData){
     time_since_last_data = now - station_data_last_updated;
-    //APP_LOG(APP_LOG_LEVEL_INFO, "X: \n(1) = %d\nnow = %d\n(3) = %d\ntime_UTC_OFFSET = %d", 
+    //APP_LOG(APP_LOG_LEVEL_INFO, "X: \n(1) = %d\nnow = %d\n(3) = %d\ntime_UTC_OFFSET = %d",
     //  (int)time_since_last_update, (int)now, (int)station_data_last_updated, (int)time_UTC_OFFSET);
   } else {
     //APP_LOG(APP_LOG_LEVEL_INFO, "THIS SHOULD NOT BE HERE !!!");
   }
   time_since_last_update = now - phone_last_updated;
-  
+
   //display time since last weather update:
   if (time_since_last_update < 10*365*24*3600){ // < 10 years
     if (ShowTimeSinceStationData){
@@ -482,15 +482,15 @@ void DisplayLastUpdated(void) {
     text_layer_set_text(weather_layer_4_last_update, "--:--");
     warning_color_last_update = 1;
   }
-  
+
   if (warning_color_last_update != warning_color_last_update_old){
     apply_color_profile();
   }
-  
+
   //display battery stats:
   static char battery_buffer_1[20];
   static char battery_buffer_2[10];
-  
+
   if (last_battery_charged_time == 0) last_battery_charged_time = now;
   t_diff_bat = now - last_battery_charged_time;
   if (last_charge_state == 2){
@@ -514,21 +514,21 @@ void DisplayLastUpdated(void) {
 
 void DisplayData(void) {
   static char buffer_1[12];
-  
+
   #ifdef ITERATE_TEMP
     weather_TEMP++;
     if (weather_TEMP>50) weather_TEMP = -50;
   #endif
-  
-  
+
+
   if (degree_f)
     snprintf(buffer_1, sizeof(buffer_1), "%d°F", (int)(weather_TEMP*1.8+32));
   else
     snprintf(buffer_1, sizeof(buffer_1), "%d°C", weather_TEMP);
   text_layer_set_text(weather_layer_1_temp, buffer_1);
-  
+
   #ifndef PBL_PLATFORM_APLITE
-  if ((ColorProfile > 1) && (ColoredTemperature)){
+  if ((ColorProfile >= 0) && (ColoredTemperature)){
     GColor textcolor_weather_int;
     if (weather_TEMP >= 40){
       textcolor_weather_int = GColorRed;  // >= 40°C
@@ -560,21 +560,21 @@ void DisplayData(void) {
       textcolor_weather_int = GColorBlueMoon;           // -30 - -21°C
     } else {
       textcolor_weather_int = GColorCobaltBlue;     // < -30°C
-    }  
+    }
     text_layer_set_text_color(weather_layer_1_temp, textcolor_weather_int);
   } else {
     text_layer_set_text_color(weather_layer_1_temp, textcolor_weather);
   }
   #endif
-  
-  
-  
-  
+
+
+
+
   text_layer_set_text(weather_layer_7_string_1, weather_string_1);
   text_layer_set_text(weather_layer_7_string_2, weather_string_2);
   text_layer_set_text(weather_layer_3_location, location_name);
-  
-  
+
+
   struct tm* sun_time = localtime(&sun_rise_unix_loc);
   static char sun_rise_text[10];
   static char sun_set_text[10];
@@ -591,14 +591,14 @@ void DisplayData(void) {
     strftime(sun_set_text, sizeof(sun_set_text), "%I:%M", sun_time);
   }
   text_layer_set_text(text_sunset_layer, sun_set_text);
-  
+
   //reset the localtime internal variables to the current time, so that the tick_handler is getting the right ones.
   //The handle_second_tick() might be executed after running localtime!
   time_t now = time(NULL);
   tick_time = localtime(&now);
-  
+
   DisplayLastUpdated();
-  
+
 }
 
 
@@ -780,9 +780,9 @@ static GColor get_weather_icon_bkgr_color(int nr){
 
 static int get_weather_icon_night(int nr){
   //change some of the day icons to the night icon index
-  
+
   switch (nr){
-    case 34: 
+    case 34:
     case 37:
     case 40:
     case 43:
@@ -795,22 +795,22 @@ static int get_weather_icon_night(int nr){
     case 64:
     case 68:
     case 71: return nr+1;
-    case 73: 
+    case 73:
   #ifndef PBL_PLATFORM_APLITE
     //each case needs 12 bytes. These 74 to 86 should not be returned by weather.js, so we ignore them here to save 13*12 = 156 bytes
-    case 74: 
-    case 75: 
-    case 76: 
-    case 77: 
-    case 78: 
-    case 79: 
-    case 80: 
-    case 81: 
-    case 82: 
-    case 83: 
-    case 84: 
-    case 85: 
-    case 86: 
+    case 74:
+    case 75:
+    case 76:
+    case 77:
+    case 78:
+    case 79:
+    case 80:
+    case 81:
+    case 82:
+    case 83:
+    case 84:
+    case 85:
+    case 86:
   #endif
       return -1; //(sun and moon): Do not show an image icon but the moon instead.
   }
@@ -824,10 +824,10 @@ static int get_weather_icon_night(int nr){
 // Called once per second of DisplaySeconds otherwise once per minute.
 // units_changed = SECOND_UNIT | MINUTE_UNIT | HOUR_UNIT;
 static void handle_second_tick(struct tm* current_time, TimeUnits units_changed) {
-  
+
   static struct tm current_time_copy;
   current_time_copy = *current_time;
-  
+
   if (LightOn == 3){
     if (LightIsOn){
       light_enable(0);
@@ -847,7 +847,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       LightIsOn = 0;
     }
   }
-  
+
   #ifdef GET_TIME_FROM_STRING
     char time_String[10];
     if(clock_is_24h_style() == true) {
@@ -858,7 +858,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       strftime(hour_mode_str, sizeof(hour_mode_str), "%p", &current_time_copy);
     }
   #endif
-  
+
   if (units_changed & HOUR_UNIT){
     #ifdef GET_TIME_FROM_STRING
       digit_h_1 = ((int)time_String[0]-48);
@@ -880,7 +880,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     }
     #endif
   }
-  
+
   if (units_changed & MINUTE_UNIT){
     #ifdef GET_TIME_FROM_STRING
       digit_m_1 = ((int)time_String[3]-48);
@@ -890,7 +890,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       digit_m_2 = current_time_copy.tm_min%10;
     #endif
   }
-  
+
   #ifdef COMPILE_WITH_SECONDS
     #ifdef GET_TIME_FROM_STRING
       digit_s_1 = ((int)time_String[6]-48);
@@ -900,7 +900,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       digit_s_2 = current_time_copy.tm_sec%10;
     #endif
   #endif
-  
+
   #ifdef COMPILE_WITH_SECONDS
     static int digit_s_1_old = 10;
   #endif
@@ -909,7 +909,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
   if (units_changed & HOUR_UNIT){
     layer_mark_dirty(s_image_layer_hour_1);
     layer_mark_dirty(s_image_layer_hour_2);
-    
+
     if (vibe_hour_old < 0) vibe_hour_old = current_time_copy.tm_hour;
     if (vibe_on_hour && (vibe_hour_old != current_time_copy.tm_hour)){
       // Vibe pattern: ON for 200ms, OFF for 100ms, ON for 400ms:
@@ -919,7 +919,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
         .num_segments = ARRAY_LENGTH(segments),
       };
       vibes_enqueue_custom_pattern(pat);
-      
+
       vibe_hour_old = current_time_copy.tm_hour;
     }
   }
@@ -936,22 +936,22 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       layer_mark_dirty(s_image_layer_second_2);
     }
   #endif
-  
-  
-  
+
+
+
   static char date_buffer[20];
   if (units_changed & HOUR_UNIT) {
     strftime(date_buffer, sizeof(date_buffer), /*"%a, %d.%m."*/date_format, &current_time_copy);
     text_layer_set_text(Date_Layer, date_buffer);
   }
-  
+
   static char moon[] = "m";
   static char weather_icon[] = "I";
   static int NightModeOld = -1;
   static int InternalNightMode = 0; // is only depending on relation between sun rise and sun set. NightMode will be switched depending on which icons are displayed.
-  
+
   //WeatherIcon = 73;
-  
+
   //calculate NightMode:
   if ((WeatherUpdateReceived) || (units_changed & MINUTE_UNIT)){
     struct tm* sun_rise_time = localtime(&sun_rise_unix_loc);
@@ -969,20 +969,20 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
   int wi_day_and_night = WeatherIcon; //set normal for days
   if ((InternalNightMode) && (MoonPhase == 2)){ //MoonPhase==2 means show weather also at night
     wi_day_and_night = get_weather_icon_night(WeatherIcon); //override some day (with a sun in it) icons with night icons
-    if (wi_day_and_night < 0) 
+    if (wi_day_and_night < 0)
       NightMode = 1; //show moon phase instead of sun and moon icons
     else
       NightMode = 0; //moon is set to be never displayed, allways display weather icon which is now also corrected for the night
   }
-  
+
   #ifndef ITERATE_TEMP
     if ((WeatherUpdateReceived) || (units_changed & HOUR_UNIT) || (NightMode != NightModeOld)){
       WeatherUpdateReceived = 0;
-      
+
       if (!NightMode){
         text_layer_set_font(moonLayer_IMG, pFontClimacons);
         layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 15+Y_OFFSET, 33, 33));
-        
+
         weather_icon[0] = (unsigned char)wi_day_and_night;
         text_layer_set_text(moonLayer_IMG, weather_icon);
         apply_color_profile();
@@ -991,29 +991,29 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
   #else
     text_layer_set_font(moonLayer_IMG, pFontClimacons);
     layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 15+Y_OFFSET, 33, 33));
-    
+
     static int wi_counter = 33;
     wi_counter++; if (wi_counter>106) wi_counter = 33;
     weather_icon[0] = (unsigned char)wi_counter;
     text_layer_set_text(moonLayer_IMG, weather_icon);
     apply_color_profile();
   #endif
-  
+
   if (NightMode) if ((units_changed & HOUR_UNIT) || (NightMode != NightModeOld)) {
     int moonphase_number = 0;
     moonphase_number = calc_moonphase_number(location_latitude);
     moon[0] = (unsigned char)(moonphase_char_number(moonphase_number));
-    
+
     text_layer_set_font(moonLayer_IMG, pFontMoon);
     layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 21+Y_OFFSET, 33, 33));
     text_layer_set_text(moonLayer_IMG, moon);
     apply_color_profile();
   }
   NightModeOld = NightMode;
-  
-  
+
+
 	if (units_changed & HOUR_UNIT){
-		// -------------------- Calendar week  
+		// -------------------- Calendar week
 	  static char cw_text[] = "XX00";
     if (strcmp("fr_FR", sys_locale) == 0) {
 		  strftime(cw_text, sizeof(cw_text), TRANSLATION_CW_FR, &current_time_copy);
@@ -1022,11 +1022,11 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     } else { //default
       strftime(cw_text, sizeof(cw_text), TRANSLATION_CW_EN, &current_time_copy);
     }
-		text_layer_set_text(cwLayer, cw_text); 
-		// ------------------- Calendar week 
+		text_layer_set_text(cwLayer, cw_text);
+		// ------------------- Calendar week
   }
-  
-  
+
+
   static char buffer_9[20];
   if (units_changed & MINUTE_UNIT){
     if (TimeZoneFormat == 0){
@@ -1045,39 +1045,39 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     }
     text_layer_set_text(text_TimeZone_layer, buffer_9);
   }
-  
-  
-  
+
+
+
   //Request weather data:
   if (initDone || doUpdateWeather){
     if ((units_changed & MINUTE_UNIT) || doUpdateWeather) {//MINUTE_UNIT, SECOND_UNIT
-      if (((int)time_since_last_update >= (WeatherUpdateInterval*60-60)) || doUpdateWeather) { 
-        
+      if (((int)time_since_last_update >= (WeatherUpdateInterval*60-60)) || doUpdateWeather) {
+
         doUpdateWeather = false;
-        
+
         // Begin dictionary
         DictionaryIterator *iter;
         app_message_outbox_begin(&iter);
-        
+
         // Add a key-value pair
         dict_write_uint8(iter, 0, 0);
-        
+
         // Send the message!
         app_message_outbox_send();
       }
     }
   }
-  
-  
-  
+
+
+
   /*if (units_changed & MINUTE_UNIT)*/ //DisplayLastUpdated();
   #ifdef ITERATE_TEMP
     DisplayData();
   #endif
-  if ((time_since_last_update <= 60) || (t_diff_bat <= 600) || (units_changed & MINUTE_UNIT)){ 
-    DisplayLastUpdated(); 
+  if ((time_since_last_update <= 60) || (t_diff_bat <= 600) || (units_changed & MINUTE_UNIT)){
+    DisplayLastUpdated();
   }
-  
+
   #ifdef COMPILE_WITH_SECONDS
     if (DisplaySeconds >= 2){
       if (SecOnShakingOn){
@@ -1101,27 +1101,27 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
       }
     }
   #endif
-  
-  
+
+
   //reset the localtime internal variables to the current time, so that the tick_handler is getting the right ones.
   //The handle_second_tick() might be executed after running localtime!
   time_t now = time(NULL);
   tick_time = localtime(&now);
-  
+
 } // ---- end handle_second_tick() ----
 
 
 static void handle_battery(BatteryChargeState charge_state) {
-  
+
   //charge_state_int = 0: Not plugged (discharging)
   //charge_state_int = 1: plugged and charging
   //charge_state_int = 2: plugged and full
-  
+
   static BatteryChargeState old_charge_state;
   int old_charge_state_int = 0; //not stitic, is calculated from old_charge_state
-  
-  
-  
+
+
+
   if (init_battery_handler){ //call after Load()
     old_charge_state_int = last_charge_state;
   } else {
@@ -1134,7 +1134,7 @@ static void handle_battery(BatteryChargeState charge_state) {
   if (charge_state.is_plugged){
     if (charge_state.is_charging) last_charge_state = 1; else last_charge_state = 2;
   } else last_charge_state = 0; // = actual charge state
-  
+
   /* (DEBUG)
   static char moon_buffer[10];
   snprintf(moon_buffer, sizeof(moon_buffer), "%d -> %d", old_charge_state_int, last_charge_state);
@@ -1154,9 +1154,9 @@ static void handle_battery(BatteryChargeState charge_state) {
       }
     }
   }
-  
+
   time_t tdiff = time(NULL) - last_battery_charged_time;
-    
+
   if ((old_charge_state_int == 0) && (last_charge_state == 1)){ //discharging --> charging
     last_battery_period_time = tdiff;
     last_battery_charged_time = time(NULL);
@@ -1171,7 +1171,7 @@ static void handle_battery(BatteryChargeState charge_state) {
     if (tdiff > 10*60) last_battery_period_time = tdiff; else last_battery_period_time += tdiff; //small values are added to old time (because after battery is full, it charges about 6 min. and gets this event a second time)
     last_battery_charged_time = time(NULL);
     last_battery_percent = charge_state.charge_percent;
-    
+
   } else if ((old_charge_state_int == 1) && (last_charge_state == 0)){ //charging --> discharging
     last_battery_period_time = tdiff;
     last_battery_charged_time = time(NULL);
@@ -1181,11 +1181,11 @@ static void handle_battery(BatteryChargeState charge_state) {
     last_battery_charged_time = time(NULL);
     last_battery_percent = charge_state.charge_percent;
   }
-  
+
   //save last battery percent for displaying in DisplayLastUpdated():
   actual_battery_percent = charge_state.charge_percent;
-  
-  
+
+
   #ifdef PBL_PLATFORM_APLITE //only on SDK 2.x
     //GRect(41, 21, 38, 11): size of InverterLayer
     layer_set_frame(inverter_layer_get_layer(s_battery_layer_fill), GRect(3, 21, (int)38*actual_battery_percent/100, 11));
@@ -1211,11 +1211,11 @@ static void handle_battery(BatteryChargeState charge_state) {
     layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(3+X_OFFSET, 21+Y_OFFSET, (int)38*actual_battery_percent/100, 11));
     //layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(0, 0, 180, 180));
     layer_set_hidden(effect_layer_get_layer(s_battery_layer_fill), false);
-    
+
     uint8_t variable_color = 0;
     #ifdef PBL_PLATFORM_CHALK
       if (actual_battery_percent > 30){
-        variable_color = 0b11000100; // 40-100 %          
+        variable_color = 0b11000100; // 40-100 %
       } else if (actual_battery_percent > 20){
         variable_color = 0b11110100; // 30 %          dark orange (GColorOrange)
       } else {
@@ -1223,15 +1223,15 @@ static void handle_battery(BatteryChargeState charge_state) {
       }
     #else
       if (actual_battery_percent > 20){
-        variable_color = 0b11000100; // 30-100 %          
+        variable_color = 0b11000100; // 30-100 %
       } else if (actual_battery_percent > 10){
         variable_color = 0b11110100; // 20 %          dark orange (GColorOrange)
       } else {
         variable_color = 0b11110000; //  0 % -  10 %  red (GColorRed)
       }
     #endif
-  
-  
+
+
     if (ColorProfile == 0) {
       textcolor_bat_uint8 = 0b11111111; //white
       bkgrcolor_bat_uint8 = 0b11000000; //black
@@ -1247,9 +1247,9 @@ static void handle_battery(BatteryChargeState charge_state) {
       textcolor_bat_uint8 = 0b11111111;
       bkgrcolor_bat_uint8 = variable_color;
     }
-  
-  
-  
+
+
+
     GlobalInverterColor = textcolor_bat_uint8 & 0b00111111;
     GlobalBkgColor      = bkgrcolor_bat_uint8 & 0b00111111;
     textcolor_bat       = (GColor8){.argb = textcolor_bat_uint8};
@@ -1257,12 +1257,12 @@ static void handle_battery(BatteryChargeState charge_state) {
   #endif
   text_layer_set_text_color(battery_runtime_layer, textcolor_bat);
   layer_mark_dirty(background_paint_layer);
-    
-    
+
+
   DisplayLastUpdated();
-  
+
   init_battery_handler = 0;
-  
+
 }
 
 
@@ -1307,7 +1307,7 @@ static void handle_bluetooth(bool connected) {
       doUpdateWeather = true;
     #endif
   }
-  
+
   connected_last = connected;
 }
 
@@ -1322,10 +1322,10 @@ static void layer_update_callback_hour_1(Layer *layer, GContext* ctx) {
   graphics_fill_rect(ctx, GRect(0, 0, 26, 41), 0, GCornerNone);
   graphics_context_set_stroke_color(ctx, textcolor_clock);
   switch (digit_h_1){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 41, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 41, GPoint(0,0));
     break;
     default:
@@ -1338,34 +1338,34 @@ static void layer_update_callback_hour_2(Layer *layer, GContext* ctx) {
   graphics_fill_rect(ctx, GRect(0, 0, 26, 41), 0, GCornerNone);
   graphics_context_set_stroke_color(ctx, textcolor_clock);
   switch (digit_h_2){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 41, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 41, GPoint(0,0));
     break;
-    case 3: 
+    case 3:
     seven_segment_paint_3(ctx, 41, GPoint(0,0));
     break;
-    case 4: 
+    case 4:
     seven_segment_paint_4(ctx, 41, GPoint(0,0));
     break;
-    case 5: 
+    case 5:
     seven_segment_paint_5(ctx, 41, GPoint(0,0));
     break;
-    case 6: 
+    case 6:
     seven_segment_paint_6(ctx, 41, GPoint(0,0));
     break;
-    case 7: 
+    case 7:
     seven_segment_paint_7(ctx, 41, GPoint(0,0));
     break;
-    case 8: 
+    case 8:
     seven_segment_paint_8(ctx, 41, GPoint(0,0));
     break;
-    case 9: 
+    case 9:
     seven_segment_paint_9(ctx, 41, GPoint(0,0));
     break;
-    case 0: 
+    case 0:
     seven_segment_paint_0(ctx, 41, GPoint(0,0));
     break;
     default:
@@ -1377,22 +1377,22 @@ static void layer_update_callback_minute_1(Layer *layer, GContext* ctx) {
   graphics_fill_rect(ctx, GRect(0, 0, 26, 41), 0, GCornerNone);
   graphics_context_set_stroke_color(ctx, textcolor_clock);
   switch (digit_m_1){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 41, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 41, GPoint(0,0));
     break;
-    case 3: 
+    case 3:
     seven_segment_paint_3(ctx, 41, GPoint(0,0));
     break;
-    case 4: 
+    case 4:
     seven_segment_paint_4(ctx, 41, GPoint(0,0));
     break;
-    case 5: 
+    case 5:
     seven_segment_paint_5(ctx, 41, GPoint(0,0));
     break;
-    case 0: 
+    case 0:
     seven_segment_paint_0(ctx, 41, GPoint(0,0));
     break;
     default:
@@ -1404,34 +1404,34 @@ static void layer_update_callback_minute_2(Layer *layer, GContext* ctx) {
   graphics_fill_rect(ctx, GRect(0, 0, 26, 41), 0, GCornerNone);
   graphics_context_set_stroke_color(ctx, textcolor_clock);
   switch (digit_m_2){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 41, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 41, GPoint(0,0));
     break;
-    case 3: 
+    case 3:
     seven_segment_paint_3(ctx, 41, GPoint(0,0));
     break;
-    case 4: 
+    case 4:
     seven_segment_paint_4(ctx, 41, GPoint(0,0));
     break;
-    case 5: 
+    case 5:
     seven_segment_paint_5(ctx, 41, GPoint(0,0));
     break;
-    case 6: 
+    case 6:
     seven_segment_paint_6(ctx, 41, GPoint(0,0));
     break;
-    case 7: 
+    case 7:
     seven_segment_paint_7(ctx, 41, GPoint(0,0));
     break;
-    case 8: 
+    case 8:
     seven_segment_paint_8(ctx, 41, GPoint(0,0));
     break;
-    case 9: 
+    case 9:
     seven_segment_paint_9(ctx, 41, GPoint(0,0));
     break;
-    case 0: 
+    case 0:
     seven_segment_paint_0(ctx, 41, GPoint(0,0));
     break;
     default:
@@ -1453,22 +1453,22 @@ static void layer_update_callback_second_1(Layer *layer, GContext* ctx) {
     return;
   }
   switch (digit_s_1){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 15, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 15, GPoint(0,0));
     break;
-    case 3: 
+    case 3:
     seven_segment_paint_3(ctx, 15, GPoint(0,0));
     break;
-    case 4: 
+    case 4:
     seven_segment_paint_4(ctx, 15, GPoint(0,0));
     break;
-    case 5: 
+    case 5:
     seven_segment_paint_5(ctx, 15, GPoint(0,0));
     break;
-    case 0: 
+    case 0:
     seven_segment_paint_0(ctx, 15, GPoint(0,0));
     break;
     default:
@@ -1488,34 +1488,34 @@ static void layer_update_callback_second_2(Layer *layer, GContext* ctx) {
     return;
   }
   switch (digit_s_2){
-    case 1: 
+    case 1:
     seven_segment_paint_1(ctx, 15, GPoint(0,0));
     break;
-    case 2: 
+    case 2:
     seven_segment_paint_2(ctx, 15, GPoint(0,0));
     break;
-    case 3: 
+    case 3:
     seven_segment_paint_3(ctx, 15, GPoint(0,0));
     break;
-    case 4: 
+    case 4:
     seven_segment_paint_4(ctx, 15, GPoint(0,0));
     break;
-    case 5: 
+    case 5:
     seven_segment_paint_5(ctx, 15, GPoint(0,0));
     break;
-    case 6: 
+    case 6:
     seven_segment_paint_6(ctx, 15, GPoint(0,0));
     break;
-    case 7: 
+    case 7:
     seven_segment_paint_7(ctx, 15, GPoint(0,0));
     break;
-    case 8: 
+    case 8:
     seven_segment_paint_8(ctx, 15, GPoint(0,0));
     break;
-    case 9: 
+    case 9:
     seven_segment_paint_9(ctx, 15, GPoint(0,0));
     break;
-    case 0: 
+    case 0:
     seven_segment_paint_0(ctx, 15, GPoint(0,0));
     break;
     default:
@@ -1532,11 +1532,11 @@ static void layer_update_callback_background(Layer *layer, GContext* ctx){
     #include "inc_background_layer_update_p_ps_pt_pts.h"
   #endif
 }
-  
+
 static void apply_color_profile(void){
-  
+
   #include "inc_color_profiles.h"
-    
+
   // --- Create Text-Layers:
   #ifdef PBL_PLATFORM_APLITE
     GColor textcolor = GColorWhite;
@@ -1558,14 +1558,14 @@ static void apply_color_profile(void){
     background_color_clock  = bkgcolor;
     background_color_lines = textcolor;
   #endif
-  
+
   int req_WI = WeatherIcon;
   if (NightMode) req_WI = 0; //At day, use this also for weather icon
   textcolor_moon = get_weather_icon_color(req_WI);
   background_color_moon = get_weather_icon_bkgr_color(req_WI);
-  
+
   layer_mark_dirty(background_paint_layer);
-  
+
   text_layer_set_text_color(text_sunrise_layer, textcolor_sun);
   text_layer_set_text_color(text_sunset_layer, textcolor_sun);
   text_layer_set_text_color(connection_layer, textcolor_con);
@@ -1579,12 +1579,12 @@ static void apply_color_profile(void){
   text_layer_set_text_color(weather_layer_7_string_1, textcolor_weather);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor_weather);
   text_layer_set_text_color(text_TimeZone_layer, textcolor_tz);
-  
+
   #ifndef PBL_PLATFORM_APLITE
     text_layer_set_text_color(text_layer_health, textcolor_Steps);
     bitmap_layer_set_background_color(s_health_bmp_layer, background_color_clock);
   #endif
-  
+
   #ifndef PBL_PLATFORM_APLITE
     if (warning_color_location) text_layer_set_text_color(weather_layer_3_location, GColorWhite);
     if (warning_color_last_update) text_layer_set_text_color(weather_layer_4_last_update, GColorWhite);
@@ -1604,16 +1604,16 @@ static void apply_color_profile(void){
       text_layer_set_background_color(weather_layer_4_last_update, bkgr);
     } else text_layer_set_background_color(weather_layer_4_last_update, GColorClear);
   #endif
-  
+
   handle_battery(battery_state_service_peek());
   handle_bluetooth(bluetooth_connection_service_peek());
-  
+
   #ifndef PBL_PLATFORM_APLITE
     DisplayData(); //set correct color of temperature
   #endif
 }
 
-  
+
 static void set_cwLayer_size(void){
   #if defined(PBL_PLATFORM_APLITE) || defined(PBL_PLATFORM_BASALT)
     #ifdef COMPILE_WITH_SECONDS
@@ -1653,14 +1653,14 @@ static void health_handler(HealthEventType event, void *context) {
   layer_set_hidden(text_layer_get_layer(text_layer_health), false);
   layer_set_hidden(bitmap_layer_get_layer(s_health_bmp_layer), false);
   layer_set_hidden(s_layer_health_up_down, false);
-  
+
   HealthServiceTimeScope scope = HealthServiceTimeScopeDailyWeekdayOrWeekend;
-  
+
   static char steps_str[20];
   static char sleep_str[15];
   static char unit[7];
   static int do_update = 1;
-  
+
   // Which type of event occured?
   switch(event) {
     case HealthEventSignificantUpdate:
@@ -1676,16 +1676,16 @@ static void health_handler(HealthEventType event, void *context) {
       do_update = 3;
       break;
   }
-  
+
   if (HealthInfo == 3) do_update = 2; // allays steps
   if (HealthInfo == 4) do_update = 3; // allays sleep
-  
+
   //do_update = 0;
-  
+
   health_higher_lower_than_avg = 0;
-  
+
   if (do_update > 0){
-    
+
     HealthMetric metric = HealthMetricStepCount;
     if (do_update < 3){
       //show steps
@@ -1702,20 +1702,20 @@ static void health_handler(HealthEventType event, void *context) {
     time_t end = time(NULL);
     // Check the metric has data available for today
     HealthServiceAccessibilityMask mask = health_service_metric_accessible(metric, start, end);
-    
+
     HealthServiceAccessibilityMask mask_avg = health_service_metric_averaged_accessible(metric, start, end, scope);
-    
+
     if (mask & HealthServiceAccessibilityMaskAvailable) {
       // Data is available!
       //APP_LOG(APP_LOG_LEVEL_INFO, "Steps today: %d", (int)health_service_sum_today(metric));
-      
+
       HealthValue today = health_service_sum_today(metric);
       HealthValue average = (HealthValue)0;
       if (mask_avg & HealthServiceAccessibilityMaskAvailable) {
         // Average is available, read it
         average = health_service_sum_averaged(metric, start, end, scope);
       }
-      
+
       if (do_update == 3){
         print_time(sleep_str, sizeof(sleep_str), (time_t)today, 0);
         snprintf(steps_str, sizeof(steps_str), "%s%s", sleep_str, unit);
@@ -1750,7 +1750,7 @@ static void health_handler(HealthEventType event, void *context) {
         snprintf(steps_str, sizeof(steps_str), "%d%s", (int)0, unit);
       }
     }
-    
+
     text_layer_set_text(text_layer_health, steps_str);
     text_layer_set_text_color(text_layer_health, textcolor_Steps_actual);
   }
@@ -1762,7 +1762,7 @@ static void layer_update_callback_health_up_down(Layer *layer, GContext* ctx){
   graphics_context_set_fill_color(ctx, background_color_clock);
   graphics_fill_rect(ctx, GRect(0, 0, 10, 10), 0, GCornerNone);
   graphics_context_set_stroke_color(ctx, textcolor_Steps_actual);
-  
+
   if (health_higher_lower_than_avg > 0){
     //TODO: paint arrow up
     graphics_context_set_stroke_color(ctx, GColorGreen);
@@ -1798,25 +1798,25 @@ static void tap_handler(AccelAxisType axis, int32_t direction) {
 
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-  
+
   // Read first item
   Tuple *t = dict_read_first(iterator);
-  
+
   int restart = 0;
   time_t now = time(NULL);
   tick_time = localtime(&now);
-  
+
   bool Settings_received = false;
 
   // For all items
   while(t != NULL) {
     // Which key was received?
     switch(t->key) {
-      
+
     case KEY_WEATHER_DATA_TIME:
       station_data_last_updated = (int)t->value->int32;
       break;
-      
+
     case KEY_LOCATION_NAME:
       snprintf(location_name, sizeof(location_name), "%s", t->value->cstring);
       phone_last_updated = time(NULL); // save the time the data arrived
@@ -1832,7 +1832,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       if (warning_color_location != (int)t->value->int32){
         warning_color_location = (int)t->value->int32;
         apply_color_profile();
-      } 
+      }
       break;
     case KEY_WEATHER_TEMP:
       #ifndef ITERATE_TEMP
@@ -1907,14 +1907,14 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
         tick_timer_service_subscribe(MINUTE_UNIT, &handle_second_tick);
       break;
     #endif
-      
+
     case KEY_SET_VIBE_DISC:
       vibe_on_disconnect = (int)t->value->int32;
       break;
     case KEY_SET_VIBE_HOUR:
       vibe_on_hour = (int)t->value->int32;
       break;
-      
+
     case KEY_SET_TZ_FORMAT:
       TimeZoneFormat = (int)t->value->int32;
       Settings_received = true;
@@ -1933,18 +1933,18 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       #endif
       break;
     #endif
-      
-      
+
+
     case KEY_SET_UPDATE_TIME:
       ShowTimeSinceStationData = (int)t->value->int32;
       break;
-      
+
     case KEY_SET_DATE_FORMAT:
       snprintf(date_format, sizeof(date_format), "%s", t->value->cstring);
       //APP_LOG(APP_LOG_LEVEL_ERROR, "date_format in watchface = %s", date_format);
       Settings_received = true;
       break;
-      
+
       /*
     case KEY_SET_LABEL_INDEX_1:
       weather_label_1_info_number = (int)t->value->int32;
@@ -1971,13 +1971,13 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       weather_label_8_info_number = (int)t->value->int32;
       break;
       */
-      
+
     case KEY_SET_DEGREE_F:
       //if (degree_f != (int)t->value->int32) restart = 1;
       degree_f = (int)t->value->int32;
       doUpdateWeather = true;
       break;
-    
+
     default:
       //APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
       break;
@@ -1986,11 +1986,11 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     // Look for next item
     t = dict_read_next(iterator);
   }
-  
+
   SaveData();
-  
+
   WeatherUpdateReceived = 1; //this indicates that the weather icon should be displayed if not in night mode.
-  
+
   if (Settings_received){
     handle_second_tick(tick_time, SECOND_UNIT | MINUTE_UNIT | HOUR_UNIT);
     #if defined(PBL_HEALTH)
@@ -1998,7 +1998,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     #endif
   }
   if (restart) window_stack_pop_all(true); //true means animated = slide out
-  
+
   DisplayData();
 }
 
@@ -2017,14 +2017,14 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 #ifndef PBL_PLATFORM_APLITE
 static void timer_cycle_color_profile_callback(void *data){
     if (cycle_color_profile){
-      
+
       apply_color_profile();
       handle_battery(battery_state_service_peek());
       handle_bluetooth(bluetooth_connection_service_peek());
-      
+
       ColorProfile++;
       if (ColorProfile > MAX_NO_COLOR_PROFILES) ColorProfile = 0;
-      
+
       app_timer_register(3000, timer_cycle_color_profile_callback, NULL);
     }
 }
@@ -2032,58 +2032,58 @@ static void timer_cycle_color_profile_callback(void *data){
 
 
 static void main_window_load(Window *window) {
-  
+
   // Use setlocale() to obtain the system locale for translation
   sys_locale = setlocale(LC_ALL, "");
   LightIsOn = 0;
-  
-  
+
+
   Layer *main_window_layer = window_get_root_layer(s_main_window);
-  
+
   initDone = false;
-  
-  // --- Load Fonts --- 
+
+  // --- Load Fonts ---
   pFontMoon = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_MOON_PHASES_SUBSET_24));
   pFontClimacons = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_CLIMACONS_32));
-  
+
   //NightMode = 1;
-  
+
   LoadData();
-  
+
   #ifndef PBL_PLATFORM_APLITE
     s_health_bitmap_sleep = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_SLEEP);
     s_health_bitmap_steps = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_STEPS);
   #endif
-  
+
   #ifdef PBL_PLATFORM_APLITE
     //reset all color schemes on aplite platform
     if (ColorProfile > 1) ColorProfile = 0;
   #endif
-  
+
   #ifdef PBL_PLATFORM_CHALK
     #include "inc_main_load_ptr.h"
   #else
     #include "inc_main_load_p_ps_pt_pts.h"
   #endif
-  
+
   apply_color_profile();
-  
+
   DisplayData();
-  
+
   // Avoids a blank screen on watch start.
   time_t now = time(NULL);
   tick_time = localtime(&now);
   handle_second_tick(tick_time, SECOND_UNIT | MINUTE_UNIT | HOUR_UNIT);
   handle_battery(battery_state_service_peek());
   handle_bluetooth(bluetooth_connection_service_peek());
-  
+
   #ifndef PBL_PLATFORM_APLITE
     if (cycle_color_profile){
       ColorProfile = 0;
       timer_cycle_color_profile_callback(NULL);
     }
   #endif
-  
+
   // --- Register Event Handlers ---
   #ifdef COMPILE_WITH_SECONDS
   if (DisplaySeconds >= 2){
@@ -2100,18 +2100,18 @@ static void main_window_load(Window *window) {
   #ifdef COMPILE_WITH_SECONDS
     accel_tap_service_subscribe(tap_handler);
   #endif
-  
-  
+
+
   #if defined(PBL_HEALTH)
-    // Attempt to subscribe 
+    // Attempt to subscribe
     if(!health_service_events_subscribe(health_handler, NULL)) {
       APP_LOG(APP_LOG_LEVEL_ERROR, "Health not available!");
     }
   #else
     //APP_LOG(APP_LOG_LEVEL_ERROR, "Health not available!");
   #endif
-  
-  
+
+
   // Register callbacks
   app_message_register_inbox_received(inbox_received_callback);
   #ifndef PBL_PLATFORM_APLITE
@@ -2119,7 +2119,7 @@ static void main_window_load(Window *window) {
     app_message_register_outbox_failed(outbox_failed_callback);
     app_message_register_outbox_sent(outbox_sent_callback);
   #endif
-  
+
   // Open AppMessage
   //APP_LOG(APP_LOG_LEVEL_INFO, "app_message_inbox_size_maximum()  = %d", (int)app_message_inbox_size_maximum());
   //APP_LOG(APP_LOG_LEVEL_INFO, "app_message_outbox_size_maximum() = %d", (int)app_message_outbox_size_maximum());
@@ -2129,11 +2129,11 @@ static void main_window_load(Window *window) {
   #else
     app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
   #endif
-  
-  
+
+
   initDone = true;
   doUpdateWeather = false;
-  
+
   if (AppFirstStart){
     AppFirstStart = 0;
     persist_write_int(KEY_DETECT_FIRST_START, AppFirstStart);
@@ -2142,16 +2142,16 @@ static void main_window_load(Window *window) {
 }
 
 static void main_window_unload(Window *window) {
-  
+
   SaveData();
-  
+
   // --- Event Handlers ---
   tick_timer_service_unsubscribe();
   battery_state_service_unsubscribe();
   bluetooth_connection_service_unsubscribe();
-  
+
   layer_destroy(background_paint_layer);
-  
+
   layer_destroy(s_image_layer_hour_1);
   layer_destroy(s_image_layer_hour_2);
   layer_destroy(s_image_layer_minute_1);
@@ -2160,32 +2160,32 @@ static void main_window_unload(Window *window) {
     layer_destroy(s_image_layer_second_1);
     layer_destroy(s_image_layer_second_2);
   #endif
-  
-  
+
+
   #ifdef PBL_PLATFORM_APLITE //only on SDK 2.x
     inverter_layer_destroy(s_battery_layer_fill);
   #else
     effect_layer_destroy(s_battery_layer_fill);
   #endif
-  
+
   #ifndef PBL_PLATFORM_APLITE
     bitmap_layer_destroy(s_health_bmp_layer);
     gbitmap_destroy(s_health_bitmap_sleep);
     gbitmap_destroy(s_health_bitmap_steps);
   #endif
-  
-  
+
+
   text_layer_destroy(text_sunrise_layer);
-  text_layer_destroy(text_sunset_layer);  
+  text_layer_destroy(text_sunset_layer);
   text_layer_destroy(connection_layer);
-  text_layer_destroy(battery_runtime_layer); 
-  
+  text_layer_destroy(battery_runtime_layer);
+
   text_layer_destroy(Date_Layer);
   text_layer_destroy(cwLayer);
-  
+
   text_layer_destroy(moonLayer_IMG);
   fonts_unload_custom_font(pFontMoon);
-  
+
   text_layer_destroy(weather_layer_1_temp);
   text_layer_destroy(weather_layer_3_location);
   text_layer_destroy(weather_layer_4_last_update);
@@ -2195,7 +2195,7 @@ static void main_window_unload(Window *window) {
   #ifndef PBL_PLATFORM_APLITE
     text_layer_destroy(text_layer_health);
   #endif
-  
+
   // --- END ---
 }
 
