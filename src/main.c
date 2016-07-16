@@ -51,6 +51,10 @@ static TextLayer *weather_layer_4_last_update; // Time of last data / time since
 static TextLayer *weather_layer_7_string_1; //configurable, under actual temperature, 2 lines
 static TextLayer *weather_layer_7_string_2; //configurable, under moon and battery info, up to 2 infos in one line
 
+static TextLayer *transit_layer_1;
+static TextLayer *transit_layer_2;
+static TextLayer *transit_layer_3;
+
 static TextLayer *text_TimeZone_layer; //24H/AM/PM and UTC-Offset
 
 static int last_battery_percent = 0;
@@ -1575,6 +1579,9 @@ static void apply_color_profile(void){
   text_layer_set_text_color(weather_layer_7_string_1, textcolor_weather);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor_weather);
   text_layer_set_text_color(text_TimeZone_layer, textcolor_tz);
+  text_layer_set_text_color(transit_layer_1, textcolor_location);
+  text_layer_set_text_color(transit_layer_2, textcolor_location);
+  text_layer_set_text_color(transit_layer_3, textcolor_location);
 
   #ifndef PBL_PLATFORM_APLITE
     text_layer_set_text_color(text_layer_health, textcolor_Steps);
@@ -2187,6 +2194,9 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(weather_layer_4_last_update);
   text_layer_destroy(weather_layer_7_string_1);
   text_layer_destroy(weather_layer_7_string_2);
+  text_layer_destroy(transit_layer_1);
+  text_layer_destroy(transit_layer_2);
+  text_layer_destroy(transit_layer_3);
   text_layer_destroy(text_TimeZone_layer);
   #ifndef PBL_PLATFORM_APLITE
     text_layer_destroy(text_layer_health);

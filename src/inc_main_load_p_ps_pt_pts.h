@@ -173,4 +173,31 @@
     layer_add_child(main_window_layer, s_layer_health_up_down);
   #endif
 
+  // Create Transit Layer 1
+  transit_layer_1 = text_layer_create(GRect(0, 16, 51, 16)); //TODO
+  text_layer_set_background_color(transit_layer_1, GColorClear);
+  text_layer_set_text_color(transit_layer_1, textcolor);
+  text_layer_set_text_alignment(transit_layer_1, GTextAlignmentLeft);
+  text_layer_set_text(transit_layer_1, "---");
+  text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_1));
+
+  // Create Transit Layer 2
+  transit_layer_2 = text_layer_create(GRect(0, 32, 51, 16)); //TODO
+  text_layer_set_background_color(transit_layer_2, GColorClear);
+  text_layer_set_text_color(transit_layer_2, textcolor);
+  text_layer_set_text_alignment(transit_layer_2, GTextAlignmentLeft);
+  text_layer_set_text(transit_layer_2, "---");
+  text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_2));
+
+  // Create Transit Layer 3
+  transit_layer_3 = text_layer_create(GRect(0, 48, 51, 16)); //TODO
+  text_layer_set_background_color(transit_layer_3, GColorClear);
+  text_layer_set_text_color(transit_layer_3, textcolor);
+  text_layer_set_text_alignment(transit_layer_3, GTextAlignmentLeft);
+  text_layer_set_text(transit_layer_3, "---");
+  text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_3));
+
   // --- END ---
