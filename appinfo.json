@@ -50,7 +50,10 @@
         "KEY_WEATHER_STRING_1": 8,
         "KEY_WEATHER_STRING_2": 9,
         "KEY_WEATHER_TEMP": 3,
-        "KEY_WEATHER_UPDATE_INT": 7
+        "KEY_WEATHER_UPDATE_INT": 7,
+        "KEY_TRANSIT_STOP_1": 42,
+        "KEY_TRANSIT_STOP_2": 43,
+        "KEY_TRANSIT_STOP_3": 44
     },
     "capabilities": [
         "location",
@@ -59,7 +62,7 @@
     ],
     "companyName": "fg",
     "enableMultiJS": false,
-    "longName": "M7S_wf_15_3",
+    "longName": "MSS-Hunter",
     "projectType": "native",
     "resources": {
         "media": [

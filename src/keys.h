@@ -2,7 +2,7 @@
 #define KEY_LOCATION_NAME       0
 #define KEY_LOCATION_LAT        1
 #define KEY_LOCATION_LON        2
-#define KEY_WEATHER_TEMP        3 
+#define KEY_WEATHER_TEMP        3
 #define KEY_WEATHER_ICON        4
 #define KEY_SET_MOON_PHASE      5
 #define KEY_WEATHER_DATA_TIME   6 //Update time of server in Unix local time
@@ -39,9 +39,13 @@
 #define KEY_SET_LABEL_INDEX_6  36
 #define KEY_SET_LABEL_INDEX_7  37
 #define KEY_SET_LABEL_INDEX_8  38 //is used
-  
+
 #define KEY_SUN_RISE_UNIX      40
 #define KEY_SUN_SET_UNIX       41
+
+#define KEY_TRANSIT_STOP_1     42
+#define KEY_TRANSIT_STOP_2     43
+#define KEY_TRANSIT_STOP_3     44
 
 #define KEY_WARN_LOCATION      50
 
@@ -54,6 +58,5 @@
 #define KEY_WEATHER_AVWX_STRING_7  107
 #define KEY_WEATHER_AVWX_STRING_8  108
 #define KEY_WEATHER_AVWX_STRING_9  109
-  
-#define KEY_DETECT_FIRST_START     200
 
+#define KEY_DETECT_FIRST_START     200
