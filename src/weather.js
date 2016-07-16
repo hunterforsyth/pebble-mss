@@ -2,12 +2,12 @@
 // =================================================================
 // TRANSIT CONFIG:
 var TRANSIT_PROVIDER = "ttc";
-var TRANSIT_STOP_ID_1 = "14539"; var TRANSIT_1_NAME = "63N";
-var TRANSIT_STOP_ID_2 = "14539"; var TRANSIT_2_NAME = "63N";
-var TRANSIT_STOP_ID_3 = "14539"; var TRANSIT_3_NAME = "63N";
+var TRANSIT_STOP_ID_1 = "14538"; var TRANSIT_1_NAME = "63N";
+var TRANSIT_STOP_ID_2 = "13625"; var TRANSIT_2_NAME = "63S";
+var TRANSIT_STOP_ID_3 = "4155"; var TRANSIT_3_NAME = "504E";
 
 var TRANSIT_SECONDS_REGEX_MATCH = /seconds=\"(.*?)\"/;
-var TRANSIT_URL = "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a={0}&stopId={1}";
+var TRANSIT_URL = "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + TRANSIT_PROVIDER + "&stopId=";
 // =================================================================
 
 var CLOUDPEBBLE = 1;
@@ -199,7 +199,7 @@ var configuration = {
   weatherLine2: 2,
   weatherLine3: 3,
   weatherLine4: 4,
-  weatherUpdateInt: 2,
+  weatherUpdateInt: 1,
 
   degree_f: 0,
   speed_unit: 0,
@@ -256,8 +256,6 @@ function locationError(err) {
 }
 
 function SendToPebble(pos, use_default) {
-  addStringFormat();
-
   var url;
   var url_forecast;
 
@@ -289,9 +287,9 @@ function SendToPebble(pos, use_default) {
     url_forecast = "http://api.openweathermap.org/data/2.5/forecast?APPID=" + configuration.OWM_API_KEY + "&q=" + city_name_req + "&lang=" + configuration.lang_id;
   }
 
-  var url_bus_1 = TRANSIT_URL.format(TRANSIT_PROVIDER, TRANSIT_STOP_ID_1);
-  var url_bus_2 = TRANSIT_URL.format(TRANSIT_PROVIDER, TRANSIT_STOP_ID_2);
-  var url_bus_3 = TRANSIT_URL.format(TRANSIT_PROVIDER, TRANSIT_STOP_ID_3);
+  var url_bus_1 = TRANSIT_URL + TRANSIT_STOP_ID_1;
+  var url_bus_2 = TRANSIT_URL + TRANSIT_STOP_ID_2;
+  var url_bus_3 = TRANSIT_URL + TRANSIT_STOP_ID_3;
 
   var utc_offset = new Date().getTimezoneOffset() * 60;
 
@@ -776,7 +774,7 @@ Pebble.addEventListener("webviewclosed",
           "KEY_SET_VIBE_HOUR": configuration.vibe_hour,
           "KEY_SET_DEGREE_F": configuration.degree_f,
           "KEY_SET_DATE_FORMAT": date_format_str,
-          "KEY_WEATHER_UPDATE_INT": 2,
+          "KEY_WEATHER_UPDATE_INT": 1,
           "KEY_SET_TZ_FORMAT": configuration.time_zone_info,
           "KEY_SET_HEALTH": configuration.health_info,
           "KEY_SET_UPDATE_TIME": configuration.show_update_time,
@@ -792,24 +790,21 @@ Pebble.addEventListener("webviewclosed",
   }
 );
 
-function addStringFormat() {
-  if (!String.prototype.format) {
-    String.prototype.format = function() {
-      var args = arguments;
-      return this.replace(/{(\d+)}/g, function(match, number) {
-        return typeof args[number] != 'undefined'
-          ? args[number]
-          : match
-        ;
-      });
-    };
-  }
-}
-
 function formatTransitTime(timesList, favNumber) {
   var stopNames = [TRANSIT_1_NAME, TRANSIT_2_NAME, TRANSIT_3_NAME];
   if (timesList.length > 0) {
-    console.log("SENT BUS " + favNumber + ", " + stopNames[favNumber - 1] + ": " + timesList[0]);
-    return stopNames[favNumber - 1] + ": " + timesList[0];
+    var formattedTime = "N/A";
+
+    try {
+      var seconds = timesList[0].match(/\"(.*?)\"/)[1];
+      if (seconds > 60) {
+        formattedTime = Math.round(seconds / 60) + "m";
+      } else {
+        formattedTime = seconds + "s";
+      }
+    } catch (e) {}
+
+    console.log("SENT BUS " + stopNames[favNumber - 1] + ": " + formattedTime);
+    return stopNames[favNumber - 1] + ": " + formattedTime;
   }
 }

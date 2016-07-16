@@ -89,6 +89,9 @@ static int  weather_TEMP        = 0; //in degree C
 static int  WeatherIcon         = (int)'I'; //sun
 static char weather_string_1[32]; //under actual temp.
 static char weather_string_2[32]; //string under moon/bat
+static char transit_string_1[32];
+static char transit_string_2[32];
+static char transit_string_3[32];
 static char time_ZONE_NAME[10];
 static time_t sun_rise_unix_loc = 0;
 static time_t sun_set_unix_loc  = 0;
@@ -300,6 +303,13 @@ void LoadData(void) {
   key = KEY_WEATHER_STRING_2;
   if (persist_exists(key)) persist_read_string(key, weather_string_2, sizeof(weather_string_2));
 
+  key = KEY_TRANSIT_STOP_1;
+  if (persist_exists(key)) persist_read_string(key, transit_string_1, sizeof(transit_string_1));
+  key = KEY_TRANSIT_STOP_2;
+  if (persist_exists(key)) persist_read_string(key, transit_string_2, sizeof(transit_string_2));
+  key = KEY_TRANSIT_STOP_3;
+  if (persist_exists(key)) persist_read_string(key, transit_string_3, sizeof(transit_string_3));
+
   key = KEY_TIME_LAST_UPDATE;
   if (persist_exists(key)) phone_last_updated = (time_t)(persist_read_int(key));
 
@@ -397,6 +407,10 @@ void SaveData(void) {
   persist_write_int    (KEY_WEATHER_UPDATE_INT, WeatherUpdateInterval);
   persist_write_string (KEY_WEATHER_STRING_1, weather_string_1);
   persist_write_string (KEY_WEATHER_STRING_2, weather_string_2);
+
+  persist_write_string (KEY_TRANSIT_STOP_1, transit_string_1);
+  persist_write_string (KEY_TRANSIT_STOP_2, transit_string_2);
+  persist_write_string (KEY_TRANSIT_STOP_3, transit_string_3);
 
   persist_write_int    (KEY_TIME_LAST_UPDATE,  (int)(phone_last_updated));
   persist_write_int    (KEY_WEATHER_DATA_TIME, (int)station_data_last_updated);
@@ -571,13 +585,13 @@ void DisplayData(void) {
   }
   #endif
 
-
-
-
   text_layer_set_text(weather_layer_7_string_1, weather_string_1);
   text_layer_set_text(weather_layer_7_string_2, weather_string_2);
   text_layer_set_text(weather_layer_3_location, location_name);
 
+  text_layer_set_text(transit_layer_1, transit_string_1);
+  text_layer_set_text(transit_layer_2, transit_string_2);
+  text_layer_set_text(transit_layer_3, transit_string_3);
 
   struct tm* sun_time = localtime(&sun_rise_unix_loc);
   static char sun_rise_text[10];
@@ -1860,6 +1874,15 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       replace_degree(weather_string_2, sizeof(weather_string_2));
       //text_layer_set_text(weather_layer_7_string_2, weather_string_2);
       //APP_LOG(APP_LOG_LEVEL_INFO, "weather_string_2 = %s", weather_string_2);
+      break;
+    case KEY_TRANSIT_STOP_1:
+      snprintf(transit_string_1, sizeof(transit_string_1), "%s", t->value->cstring);
+      break;
+    case KEY_TRANSIT_STOP_2:
+      snprintf(transit_string_2, sizeof(transit_string_2), "%s", t->value->cstring);
+      break;
+    case KEY_TRANSIT_STOP_3:
+      snprintf(transit_string_3, sizeof(transit_string_3), "%s", t->value->cstring);
       break;
     case KEY_TIME_ZONE_NAME:
       snprintf(time_ZONE_NAME, sizeof(time_ZONE_NAME), "%s", t->value->cstring);
