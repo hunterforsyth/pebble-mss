@@ -1005,7 +1005,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
 
       if (!NightMode){
         text_layer_set_font(moonLayer_IMG, pFontClimacons);
-        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 16+Y_OFFSET, 33, 33));
+        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(54+X_OFFSET, 16+Y_OFFSET, 33, 33));
 
         weather_icon[0] = (unsigned char)wi_day_and_night;
         text_layer_set_text(moonLayer_IMG, weather_icon);
@@ -1014,7 +1014,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     }
   #else
     text_layer_set_font(moonLayer_IMG, pFontClimacons);
-    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 16+Y_OFFSET, 33, 33));
+    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(54+X_OFFSET, 16+Y_OFFSET, 33, 33));
 
     static int wi_counter = 33;
     wi_counter++; if (wi_counter>106) wi_counter = 33;
@@ -1029,7 +1029,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     moon[0] = (unsigned char)(moonphase_char_number(moonphase_number));
 
     text_layer_set_font(moonLayer_IMG, pFontMoon);
-    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 22+Y_OFFSET, 33, 33));
+    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(54+X_OFFSET, 22+Y_OFFSET, 33, 33));
     text_layer_set_text(moonLayer_IMG, moon);
     apply_color_profile();
   }

@@ -140,7 +140,7 @@
   weather_layer_7_string_2 = text_layer_create(GRect(52, 50, 144-52, 17)); //TODO
   text_layer_set_background_color(weather_layer_7_string_2, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor);
-  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentRight);
+  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentCenter);
   text_layer_set_text(weather_layer_7_string_2, "---");
   text_layer_set_font(weather_layer_7_string_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_2));
@@ -179,7 +179,7 @@
   text_layer_set_text_color(transit_layer_1, textcolor);
   text_layer_set_text_alignment(transit_layer_1, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_1, "---");
-  text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_1));
 
   // Create Transit Layer 2
@@ -188,7 +188,7 @@
   text_layer_set_text_color(transit_layer_2, textcolor);
   text_layer_set_text_alignment(transit_layer_2, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_2, "---");
-  text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_2));
 
   // Create Transit Layer 3
@@ -197,7 +197,7 @@
   text_layer_set_text_color(transit_layer_3, textcolor);
   text_layer_set_text_alignment(transit_layer_3, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_3, "---");
-  text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_3));
 
   // Create Transit Layer 4
@@ -206,7 +206,7 @@
   text_layer_set_text_color(transit_layer_4, textcolor);
   text_layer_set_text_alignment(transit_layer_4, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_4, "---");
-  text_layer_set_font(transit_layer_4, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+  text_layer_set_font(transit_layer_4, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_4));
 
   // --- END ---
