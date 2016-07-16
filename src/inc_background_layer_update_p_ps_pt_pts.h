@@ -13,6 +13,7 @@
   graphics_context_set_stroke_color(ctx, background_color_lines);
   graphics_draw_line(ctx, GPoint(110,   0), GPoint(110,  14));
   graphics_draw_line(ctx, GPoint(38,   0), GPoint(38,  14));
+  graphics_draw_line(ctx, GPoint(51,   14), GPoint(51,  69));
   graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
   graphics_draw_line(ctx, GPoint(  0,  69), GPoint(168,  69));
   graphics_draw_line(ctx, GPoint(  0, 154), GPoint(168, 154));

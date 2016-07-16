@@ -137,11 +137,11 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_1));
 
   // Create String_2 Layer
-  weather_layer_7_string_2 = text_layer_create(GRect(1, 50, 88, 17)); //TODO
+  weather_layer_7_string_2 = text_layer_create(GRect(53, 50, 144-53-1, 17)); //TODO
   text_layer_set_background_color(weather_layer_7_string_2, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentCenter);
-  text_layer_set_text(weather_layer_7_string_2, "--- / ---");
+  text_layer_set_text(weather_layer_7_string_2, "---");
   text_layer_set_font(weather_layer_7_string_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_2));
 
