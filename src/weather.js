@@ -1,10 +1,13 @@
 
 // =================================================================
 // TRANSIT CONFIG:
+// Get STOP_ID's from nextbus.com
+
 var TRANSIT_PROVIDER = "ttc";
-var TRANSIT_STOP_ID_1 = "14538"; var TRANSIT_1_NAME = "63N";
-var TRANSIT_STOP_ID_2 = "13625"; var TRANSIT_2_NAME = "63S";
-var TRANSIT_STOP_ID_3 = "4155"; var TRANSIT_3_NAME = "504E";
+var TRANSIT_STOP_ID_1 = "14538"; var TRANSIT_1_EXTRA_PARAMS = "&routeTag=63"; var TRANSIT_1_NAME = "63N";
+var TRANSIT_STOP_ID_2 = "13625"; var TRANSIT_2_EXTRA_PARAMS = "&routeTag=63"; var TRANSIT_2_NAME = "63S";
+var TRANSIT_STOP_ID_3 = "4155"; var TRANSIT_3_EXTRA_PARAMS = "&routeTag=504"; var TRANSIT_3_NAME = "504";
+var TRANSIT_STOP_ID_4 = "4155"; var TRANSIT_4_EXTRA_PARAMS = "&routeTag=514"; var TRANSIT_4_NAME = "514";
 
 var TRANSIT_SECONDS_REGEX_MATCH = /seconds=\"(.*?)\"/;
 var TRANSIT_URL = "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + TRANSIT_PROVIDER + "&stopId=";
@@ -287,9 +290,10 @@ function SendToPebble(pos, use_default) {
     url_forecast = "http://api.openweathermap.org/data/2.5/forecast?APPID=" + configuration.OWM_API_KEY + "&q=" + city_name_req + "&lang=" + configuration.lang_id;
   }
 
-  var url_bus_1 = TRANSIT_URL + TRANSIT_STOP_ID_1;
-  var url_bus_2 = TRANSIT_URL + TRANSIT_STOP_ID_2;
-  var url_bus_3 = TRANSIT_URL + TRANSIT_STOP_ID_3;
+  var url_bus_1 = TRANSIT_URL + TRANSIT_STOP_ID_1 + TRANSIT_1_EXTRA_PARAMS;
+  var url_bus_2 = TRANSIT_URL + TRANSIT_STOP_ID_2 + TRANSIT_2_EXTRA_PARAMS;
+  var url_bus_3 = TRANSIT_URL + TRANSIT_STOP_ID_3 + TRANSIT_3_EXTRA_PARAMS;
+  var url_bus_4 = TRANSIT_URL + TRANSIT_STOP_ID_4 + TRANSIT_4_EXTRA_PARAMS;
 
   var utc_offset = new Date().getTimezoneOffset() * 60;
 
@@ -337,303 +341,312 @@ function SendToPebble(pos, use_default) {
                         busTimes3 = responseText.match(TRANSIT_SECONDS_REGEX_MATCH);
                       } catch (e) {}
 
-                      //---------------------------------------------------------------------------------------------------
+                      xhrRequest(url_bus_4, 'GET',
+                        function(responseText) {
+                          var busTimes4;
+                          try {
+                            busTimes4 = responseText.match(TRANSIT_SECONDS_REGEX_MATCH);
+                          } catch (e) {}
 
-                      if (!WeatherDataJSON_error){
+                          //---------------------------------------------------------------------------------------------------
 
-                        // Temperature in Kelvin requires adjustment
-                        var temperature = Math.round((WeatherDataJSON.main.temp - 273.15));
-                        var temp_min = Math.round((WeatherDataJSON.main.temp_min - 273.15));
-                        var temp_max = Math.round((WeatherDataJSON.main.temp_max - 273.15));
+                          if (!WeatherDataJSON_error){
 
-
-                        // Conditions
-                        var conditions = WeatherDataJSON.weather[0].description;
-
-                        var conditions_icon = OWMclimacon[WeatherDataJSON.weather[0].id].charCodeAt(0);
+                            // Temperature in Kelvin requires adjustment
+                            var temperature = Math.round((WeatherDataJSON.main.temp - 273.15));
+                            var temp_min = Math.round((WeatherDataJSON.main.temp_min - 273.15));
+                            var temp_max = Math.round((WeatherDataJSON.main.temp_max - 273.15));
 
 
-                        var pressure = Math.round(WeatherDataJSON.main.pressure);
-                        var pressure_unit = "hPa";
-                        switch (configuration.pressure_unit){
-                          case 1:
-                            pressure = Math.round(pressure/1.333);
-                            pressure_unit = "mmHg";
-                            break;
-                          case 2:
-                            pressure = Math.round(pressure/33.86389*100)/100;
-                            pressure_unit = "inHg";
-                            break;
-                        }
+                            // Conditions
+                            var conditions = WeatherDataJSON.weather[0].description;
 
-                        var humidity = Math.round(WeatherDataJSON.main.humidity);
+                            var conditions_icon = OWMclimacon[WeatherDataJSON.weather[0].id].charCodeAt(0);
 
-                        var speed_unit_conversion_factor = 1;
-                        if (configuration.speed_unit === 0){
-                          speed_unit_conversion_factor = 3.6; //m/s -> km/h
-                        } else if (configuration.speed_unit == 1){
-                          speed_unit_conversion_factor = 2.236; //m/s -> mph
-                        }
-                        var wind_speed = WeatherDataJSON.wind.speed*speed_unit_conversion_factor;
-                        if (wind_speed < 10){
-                          wind_speed = Math.round(wind_speed*10)/10;
-                        } else {
-                          wind_speed = Math.round(wind_speed);
-                        }
-                        var wind_speed_unit = "m/s";
-                        if (configuration.speed_unit === 0) wind_speed_unit = "km/h";
-                        if (configuration.speed_unit == 1) wind_speed_unit = "mph";
 
-                        var sunrise_unix = WeatherDataJSON.sys.sunrise;
-                        var sunset_unix  = WeatherDataJSON.sys.sunset;
-                        var sunrise = timeConverter(Math.round(sunrise_unix));
-                        var sunset  = timeConverter(Math.round(sunset_unix));
-                        //sunrise_unix = sunrise_unix - utc_offset;
-                        //sunset_unix  = sunset_unix  - utc_offset;
+                            var pressure = Math.round(WeatherDataJSON.main.pressure);
+                            var pressure_unit = "hPa";
+                            switch (configuration.pressure_unit){
+                              case 1:
+                                pressure = Math.round(pressure/1.333);
+                                pressure_unit = "mmHg";
+                                break;
+                              case 2:
+                                pressure = Math.round(pressure/33.86389*100)/100;
+                                pressure_unit = "inHg";
+                                break;
+                            }
 
-                        var time_of_last_data = Number(WeatherDataJSON.dt);
+                            var humidity = Math.round(WeatherDataJSON.main.humidity);
 
-                        // Location:
-                        var location_name = WeatherDataJSON.name;
-                        var warn_location = 0;
-                        if ((configuration.autodetect_loc) && (use_default)){ //tried autodection of location, but could not get the lat long values from phone, so used default location set by the user.
-                          warn_location = 2;
-                        }
-                        if ((configuration.autodetect_loc === 0) && (use_default === 0)){ //detected location, but used user input
-                          if ((Math.abs(WeatherDataJSON.coord.lat - pos_lat) > 0.3) && (Math.abs(WeatherDataJSON.coord.lon - pos_lon) > 0.5)){
-                            warn_location = 1;
+                            var speed_unit_conversion_factor = 1;
+                            if (configuration.speed_unit === 0){
+                              speed_unit_conversion_factor = 3.6; //m/s -> km/h
+                            } else if (configuration.speed_unit == 1){
+                              speed_unit_conversion_factor = 2.236; //m/s -> mph
+                            }
+                            var wind_speed = WeatherDataJSON.wind.speed*speed_unit_conversion_factor;
+                            if (wind_speed < 10){
+                              wind_speed = Math.round(wind_speed*10)/10;
+                            } else {
+                              wind_speed = Math.round(wind_speed);
+                            }
+                            var wind_speed_unit = "m/s";
+                            if (configuration.speed_unit === 0) wind_speed_unit = "km/h";
+                            if (configuration.speed_unit == 1) wind_speed_unit = "mph";
+
+                            var sunrise_unix = WeatherDataJSON.sys.sunrise;
+                            var sunset_unix  = WeatherDataJSON.sys.sunset;
+                            var sunrise = timeConverter(Math.round(sunrise_unix));
+                            var sunset  = timeConverter(Math.round(sunset_unix));
+                            //sunrise_unix = sunrise_unix - utc_offset;
+                            //sunset_unix  = sunset_unix  - utc_offset;
+
+                            var time_of_last_data = Number(WeatherDataJSON.dt);
+
+                            // Location:
+                            var location_name = WeatherDataJSON.name;
+                            var warn_location = 0;
+                            if ((configuration.autodetect_loc) && (use_default)){ //tried autodection of location, but could not get the lat long values from phone, so used default location set by the user.
+                              warn_location = 2;
+                            }
+                            if ((configuration.autodetect_loc === 0) && (use_default === 0)){ //detected location, but used user input
+                              if ((Math.abs(WeatherDataJSON.coord.lat - pos_lat) > 0.3) && (Math.abs(WeatherDataJSON.coord.lon - pos_lon) > 0.5)){
+                                warn_location = 1;
+                              }
+                            }
+
+                            // TIME:
+
+                            // Get Min/Max temp. from forecast:
+                            var Forecast = {
+                              TempMin: 10000, // in Kelvin
+                              TempMax:     0  // in Kelvin
+                            };
+                            if (!ForecastDataJSON_error){
+                              var i;
+                              for (i = 0; i < Math.min(ForecastDataJSON.cnt, 8); i++) { // 8 entries means 24 hours for 3 hour forecast
+                                Forecast.TempMin = Math.min(ForecastDataJSON.list[i].main.temp, Forecast.TempMin);
+                                Forecast.TempMax = Math.max(ForecastDataJSON.list[i].main.temp, Forecast.TempMax);
+                              }
+                            }
+
+
+
+                            var weather_Line_1 = "";
+                            var weather_Line_2 = "";
+                            var weather_Line_3 = "";
+                            var weather_Line_4 = "";
+
+
+                            switch (configuration.weatherLine1){
+                              case 1:
+                                weather_Line_1 = conditions;
+                                break;
+                              case 2:
+                                weather_Line_1 = wind_speed + " " + wind_speed_unit;
+                                break;
+                              case 3:
+                                weather_Line_1 = humidity + " % RH";
+                                break;
+                              case 4:
+                                weather_Line_1 = pressure + " " + pressure_unit;
+                                break;
+                              case 5:
+                                if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
+                                  weather_Line_1 = " --/-- ";
+                                } else {
+                                  if (configuration.degree_f){
+                                    weather_Line_1 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
+                                  } else {
+                                    weather_Line_1 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
+                                    //weather_Line_1 = Math.round((Forecast.TempMax-273.15)) + "/" + Math.round((Forecast.TempMin-273.15)) + "C";
+                                  }
+                                }
+                                break;
+                            }
+
+                            switch (configuration.weatherLine2){
+                              case 1:
+                                weather_Line_2 = conditions;
+                                break;
+                              case 2:
+                                weather_Line_2 = wind_speed + " " + wind_speed_unit;
+                                break;
+                              case 3:
+                                weather_Line_2 = humidity + " % RH";
+                                break;
+                              case 4:
+                                weather_Line_2 = pressure + " " + pressure_unit;
+                                break;
+                              case 5:
+                                if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
+                                  weather_Line_2 = " --/-- ";
+                                } else {
+                                  if (configuration.degree_f){
+                                    weather_Line_2 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
+                                  } else {
+                                    weather_Line_2 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
+                                  }
+                                }
+                                break;
+                            }
+
+
+
+                            switch (configuration.weatherLine3){
+                              case 1:
+                                weather_Line_3 = conditions;
+                                break;
+                              case 2:
+                                weather_Line_3 = wind_speed + " " + wind_speed_unit;
+                                break;
+                              case 3:
+                                weather_Line_3 = humidity + " %";
+                                break;
+                              case 4:
+                                weather_Line_3 = pressure + " " + pressure_unit;
+                                break;
+                              case 5:
+                                if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
+                                  weather_Line_3 = " --/-- ";
+                                } else {
+                                  if (configuration.degree_f){
+                                    weather_Line_3 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
+                                  } else {
+                                    weather_Line_3 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
+                                  }
+                                }
+                                break;
+                            }
+
+
+
+                            switch (configuration.weatherLine4){
+                              case 1:
+                                weather_Line_4 = conditions;
+                                break;
+                              case 2:
+                                weather_Line_4 = wind_speed + " " + wind_speed_unit;
+                                break;
+                              case 3:
+                                weather_Line_4 = humidity + " %";
+                                break;
+                              case 4:
+                                weather_Line_4 = pressure + " " + pressure_unit;
+                                break;
+                              case 5:
+                                if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
+                                  weather_Line_4 = " --/-- ";
+                                } else {
+                                  if (configuration.degree_f){
+                                    weather_Line_4 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
+                                  } else {
+                                    weather_Line_4 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
+                                  }
+                                }
+                                break;
+                            }
+
+                            var weather_string_1 = weather_Line_1;
+                            var weather_string_2 = weather_Line_3 + " / " + weather_Line_4; //TODO: what should be on this string?
+                            if (configuration.weatherLine3 === 0) weather_string_2 = weather_Line_4;
+                            if (configuration.weatherLine4 === 0) weather_string_2 = weather_Line_3;
+
+                            if (CLOUDPEBBLE) {
+                              weather_string_1 = (weather_string_1.replace('°', '__')).replace('°', '__');
+                              weather_string_2 = (weather_string_2.replace('°', '__')).replace('°', '__');
+                            }
+
+                            if (configuration.autodetect_loc == 2) warn_location = 0;
+
+                            // Assemble dictionary using our keys
+                            var dictionary = {
+                              "KEY_LOCATION_NAME": location_name,
+                              "KEY_LOCATION_LAT": Math.round(pos.coords.latitude*1000000),
+                              "KEY_LOCATION_LON": Math.round(pos.coords.longitude*1000000),
+                              "KEY_WEATHER_TEMP": temperature,
+                              "KEY_WEATHER_STRING_1": weather_string_1,
+                              "KEY_WEATHER_STRING_2": weather_string_2,
+                              "KEY_WEATHER_ICON": conditions_icon,
+                              "KEY_TIME_UTC_OFFSET": utc_offset,
+                              "KEY_TIME_ZONE_NAME": getTimeZone(),
+                              "KEY_SUN_RISE": sunrise,
+                              "KEY_SUN_SET": sunset,
+                              "KEY_SUN_RISE_UNIX": sunrise_unix,
+                              "KEY_SUN_SET_UNIX": sunset_unix, //both converted to local time zone
+                              "KEY_WEATHER_DATA_TIME": time_of_last_data,
+                              "KEY_WARN_LOCATION": warn_location,
+                              "KEY_TRANSIT_STOP_1": formatTransitTime(busTimes1, 1),
+                              "KEY_TRANSIT_STOP_2": formatTransitTime(busTimes2, 2),
+                              "KEY_TRANSIT_STOP_3": formatTransitTime(busTimes3, 3),
+                              "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4, 4)
+                            };
+
+                            // Send to Pebble
+
+                            Pebble.sendAppMessage(dictionary,
+                                                  function(e) {
+                                                  },
+                                                  function(e) {
+                                                  }
+                                                 );
+
+                            //var dictionary2 = {
+                              /*"KEY_LOCATION_NAME": location_name,
+                              "KEY_LOCATION_LAT": Math.round(pos.coords.latitude*1000000),
+                              "KEY_LOCATION_LON": Math.round(pos.coords.longitude*1000000),
+                              "KEY_WEATHER_TEMP": temperature,
+                              */ //"KEY_WEATHER_STRING_1": weather_string_1,
+                            //  "KEY_WEATHER_STRING_2": weather_string_2
+                            /*,
+                              "KEY_TIME_UTC_OFFSET": utc_offset,
+                              "KEY_TIME_ZONE_NAME": getTimeZone(),
+                              "KEY_SUN_RISE": sunrise,
+                              "KEY_SUN_SET": sunset*/
+                            //};
+                            /*
+                            Pebble.sendAppMessage(dictionary2,
+                                                  function(e) {
+                                                  },
+                                                  function(e) {
+                                                  }
+                                                 );
+                              */
+                          } else { //end: if (!WeatherDataJSON_error)
+
+                            var weather_string_1 = WeatherDataJSON_error_str;
+                            var weather_string_2 = "E01: OWM Data error.";
+
+                            // Assemble dictionary using our keys
+                            var dictionary = {
+                              "KEY_WEATHER_STRING_1": weather_string_1,
+                              "KEY_WEATHER_STRING_2": weather_string_2,
+                              "KEY_TIME_UTC_OFFSET": utc_offset,
+                              "KEY_TIME_ZONE_NAME": getTimeZone()
+                            };
+
+                            Pebble.sendAppMessage(dictionary,
+                                                  function(e) {
+                                                  },
+                                                  function(e) {
+                                                  }
+                                                 );
                           }
+                          var date = new Date();
+
+                          ForecastDataJSON = {};
+                          WeatherDataJSON  = {};
+
+                          //---------------------------------------------------------------------------------------------------
                         }
-
-                        // TIME:
-
-                        // Get Min/Max temp. from forecast:
-                        var Forecast = {
-                          TempMin: 10000, // in Kelvin
-                          TempMax:     0  // in Kelvin
-                        };
-                        if (!ForecastDataJSON_error){
-                          var i;
-                          for (i = 0; i < Math.min(ForecastDataJSON.cnt, 8); i++) { // 8 entries means 24 hours for 3 hour forecast
-                            Forecast.TempMin = Math.min(ForecastDataJSON.list[i].main.temp, Forecast.TempMin);
-                            Forecast.TempMax = Math.max(ForecastDataJSON.list[i].main.temp, Forecast.TempMax);
-                          }
-                        }
-
-
-
-                        var weather_Line_1 = "";
-                        var weather_Line_2 = "";
-                        var weather_Line_3 = "";
-                        var weather_Line_4 = "";
-
-
-                        switch (configuration.weatherLine1){
-                          case 1:
-                            weather_Line_1 = conditions;
-                            break;
-                          case 2:
-                            weather_Line_1 = wind_speed + " " + wind_speed_unit;
-                            break;
-                          case 3:
-                            weather_Line_1 = humidity + " % RH";
-                            break;
-                          case 4:
-                            weather_Line_1 = pressure + " " + pressure_unit;
-                            break;
-                          case 5:
-                            if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
-                              weather_Line_1 = " --/-- ";
-                            } else {
-                              if (configuration.degree_f){
-                                weather_Line_1 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
-                              } else {
-                                weather_Line_1 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
-                                //weather_Line_1 = Math.round((Forecast.TempMax-273.15)) + "/" + Math.round((Forecast.TempMin-273.15)) + "C";
-                              }
-                            }
-                            break;
-                        }
-
-                        switch (configuration.weatherLine2){
-                          case 1:
-                            weather_Line_2 = conditions;
-                            break;
-                          case 2:
-                            weather_Line_2 = wind_speed + " " + wind_speed_unit;
-                            break;
-                          case 3:
-                            weather_Line_2 = humidity + " % RH";
-                            break;
-                          case 4:
-                            weather_Line_2 = pressure + " " + pressure_unit;
-                            break;
-                          case 5:
-                            if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
-                              weather_Line_2 = " --/-- ";
-                            } else {
-                              if (configuration.degree_f){
-                                weather_Line_2 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
-                              } else {
-                                weather_Line_2 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
-                              }
-                            }
-                            break;
-                        }
-
-
-
-                        switch (configuration.weatherLine3){
-                          case 1:
-                            weather_Line_3 = conditions;
-                            break;
-                          case 2:
-                            weather_Line_3 = wind_speed + " " + wind_speed_unit;
-                            break;
-                          case 3:
-                            weather_Line_3 = humidity + " %";
-                            break;
-                          case 4:
-                            weather_Line_3 = pressure + " " + pressure_unit;
-                            break;
-                          case 5:
-                            if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
-                              weather_Line_3 = " --/-- ";
-                            } else {
-                              if (configuration.degree_f){
-                                weather_Line_3 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
-                              } else {
-                                weather_Line_3 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
-                              }
-                            }
-                            break;
-                        }
-
-
-
-                        switch (configuration.weatherLine4){
-                          case 1:
-                            weather_Line_4 = conditions;
-                            break;
-                          case 2:
-                            weather_Line_4 = wind_speed + " " + wind_speed_unit;
-                            break;
-                          case 3:
-                            weather_Line_4 = humidity + " %";
-                            break;
-                          case 4:
-                            weather_Line_4 = pressure + " " + pressure_unit;
-                            break;
-                          case 5:
-                            if ((Forecast.TempMin == 10000) || (Forecast.TempMax === 0)){
-                              weather_Line_4 = " --/-- ";
-                            } else {
-                              if (configuration.degree_f){
-                                weather_Line_4 = Math.round((Forecast.TempMax-273.15)*1.8+32) + "°/" + Math.round((Forecast.TempMin-273.15)*1.8+32) + "°F";
-                              } else {
-                                weather_Line_4 = Math.round((Forecast.TempMax-273.15)) + "°/" + Math.round((Forecast.TempMin-273.15)) + "°C";
-                              }
-                            }
-                            break;
-                        }
-
-                        var weather_string_1 = weather_Line_1;
-                        var weather_string_2 = weather_Line_3 + " / " + weather_Line_4; //TODO: what should be on this string?
-                        if (configuration.weatherLine3 === 0) weather_string_2 = weather_Line_4;
-                        if (configuration.weatherLine4 === 0) weather_string_2 = weather_Line_3;
-
-                        if (CLOUDPEBBLE) {
-                          weather_string_1 = (weather_string_1.replace('°', '__')).replace('°', '__');
-                          weather_string_2 = (weather_string_2.replace('°', '__')).replace('°', '__');
-                        }
-
-                        if (configuration.autodetect_loc == 2) warn_location = 0;
-
-                        // Assemble dictionary using our keys
-                        var dictionary = {
-                          "KEY_LOCATION_NAME": location_name,
-                          "KEY_LOCATION_LAT": Math.round(pos.coords.latitude*1000000),
-                          "KEY_LOCATION_LON": Math.round(pos.coords.longitude*1000000),
-                          "KEY_WEATHER_TEMP": temperature,
-                          "KEY_WEATHER_STRING_1": weather_string_1,
-                          "KEY_WEATHER_STRING_2": weather_string_2,
-                          "KEY_WEATHER_ICON": conditions_icon,
-                          "KEY_TIME_UTC_OFFSET": utc_offset,
-                          "KEY_TIME_ZONE_NAME": getTimeZone(),
-                          "KEY_SUN_RISE": sunrise,
-                          "KEY_SUN_SET": sunset,
-                          "KEY_SUN_RISE_UNIX": sunrise_unix,
-                          "KEY_SUN_SET_UNIX": sunset_unix, //both converted to local time zone
-                          "KEY_WEATHER_DATA_TIME": time_of_last_data,
-                          "KEY_WARN_LOCATION": warn_location,
-                          "KEY_TRANSIT_STOP_1": formatTransitTime(busTimes1, 1),
-                          "KEY_TRANSIT_STOP_2": formatTransitTime(busTimes2, 2),
-                          "KEY_TRANSIT_STOP_3": formatTransitTime(busTimes3, 3)
-                        };
-
-                        // Send to Pebble
-
-                        Pebble.sendAppMessage(dictionary,
-                                              function(e) {
-                                              },
-                                              function(e) {
-                                              }
-                                             );
-
-                        //var dictionary2 = {
-                          /*"KEY_LOCATION_NAME": location_name,
-                          "KEY_LOCATION_LAT": Math.round(pos.coords.latitude*1000000),
-                          "KEY_LOCATION_LON": Math.round(pos.coords.longitude*1000000),
-                          "KEY_WEATHER_TEMP": temperature,
-                          */ //"KEY_WEATHER_STRING_1": weather_string_1,
-                        //  "KEY_WEATHER_STRING_2": weather_string_2
-                        /*,
-                          "KEY_TIME_UTC_OFFSET": utc_offset,
-                          "KEY_TIME_ZONE_NAME": getTimeZone(),
-                          "KEY_SUN_RISE": sunrise,
-                          "KEY_SUN_SET": sunset*/
-                        //};
-                        /*
-                        Pebble.sendAppMessage(dictionary2,
-                                              function(e) {
-                                              },
-                                              function(e) {
-                                              }
-                                             );
-                          */
-                      } else { //end: if (!WeatherDataJSON_error)
-
-                        var weather_string_1 = WeatherDataJSON_error_str;
-                        var weather_string_2 = "E01: OWM Data error.";
-
-                        // Assemble dictionary using our keys
-                        var dictionary = {
-                          "KEY_WEATHER_STRING_1": weather_string_1,
-                          "KEY_WEATHER_STRING_2": weather_string_2,
-                          "KEY_TIME_UTC_OFFSET": utc_offset,
-                          "KEY_TIME_ZONE_NAME": getTimeZone()
-                        };
-
-                        Pebble.sendAppMessage(dictionary,
-                                              function(e) {
-                                              },
-                                              function(e) {
-                                              }
-                                             );
-                      }
-                      var date = new Date();
-
-                      ForecastDataJSON = {};
-                      WeatherDataJSON  = {};
-
-                      //---------------------------------------------------------------------------------------------------
+                      );
                     }
                   );
                 }
               );
             }
           );
-
         }
       );
     }
@@ -791,9 +804,9 @@ Pebble.addEventListener("webviewclosed",
 );
 
 function formatTransitTime(timesList, favNumber) {
-  var stopNames = [TRANSIT_1_NAME, TRANSIT_2_NAME, TRANSIT_3_NAME];
+  var stopNames = [TRANSIT_1_NAME, TRANSIT_2_NAME, TRANSIT_3_NAME, TRANSIT_4_NAME];
   if (timesList.length > 0) {
-    var formattedTime = "N/A";
+    var formattedTime = "??";
 
     try {
       var seconds = timesList[0].match(/\"(.*?)\"/)[1];
@@ -804,7 +817,6 @@ function formatTransitTime(timesList, favNumber) {
       }
     } catch (e) {}
 
-    console.log("SENT BUS " + stopNames[favNumber - 1] + ": " + formattedTime);
     return stopNames[favNumber - 1] + ": " + formattedTime;
   }
 }

@@ -54,6 +54,7 @@ static TextLayer *weather_layer_7_string_2; //configurable, under moon and batte
 static TextLayer *transit_layer_1;
 static TextLayer *transit_layer_2;
 static TextLayer *transit_layer_3;
+static TextLayer *transit_layer_4;
 
 static TextLayer *text_TimeZone_layer; //24H/AM/PM and UTC-Offset
 
@@ -92,6 +93,7 @@ static char weather_string_2[32]; //string under moon/bat
 static char transit_string_1[32];
 static char transit_string_2[32];
 static char transit_string_3[32];
+static char transit_string_4[32];
 static char time_ZONE_NAME[10];
 static time_t sun_rise_unix_loc = 0;
 static time_t sun_set_unix_loc  = 0;
@@ -309,6 +311,8 @@ void LoadData(void) {
   if (persist_exists(key)) persist_read_string(key, transit_string_2, sizeof(transit_string_2));
   key = KEY_TRANSIT_STOP_3;
   if (persist_exists(key)) persist_read_string(key, transit_string_3, sizeof(transit_string_3));
+  key = KEY_TRANSIT_STOP_4;
+  if (persist_exists(key)) persist_read_string(key, transit_string_4, sizeof(transit_string_4));
 
   key = KEY_TIME_LAST_UPDATE;
   if (persist_exists(key)) phone_last_updated = (time_t)(persist_read_int(key));
@@ -411,6 +415,7 @@ void SaveData(void) {
   persist_write_string (KEY_TRANSIT_STOP_1, transit_string_1);
   persist_write_string (KEY_TRANSIT_STOP_2, transit_string_2);
   persist_write_string (KEY_TRANSIT_STOP_3, transit_string_3);
+  persist_write_string (KEY_TRANSIT_STOP_4, transit_string_4);
 
   persist_write_int    (KEY_TIME_LAST_UPDATE,  (int)(phone_last_updated));
   persist_write_int    (KEY_WEATHER_DATA_TIME, (int)station_data_last_updated);
@@ -592,6 +597,7 @@ void DisplayData(void) {
   text_layer_set_text(transit_layer_1, transit_string_1);
   text_layer_set_text(transit_layer_2, transit_string_2);
   text_layer_set_text(transit_layer_3, transit_string_3);
+  text_layer_set_text(transit_layer_4, transit_string_4);
 
   struct tm* sun_time = localtime(&sun_rise_unix_loc);
   static char sun_rise_text[10];
@@ -999,7 +1005,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
 
       if (!NightMode){
         text_layer_set_font(moonLayer_IMG, pFontClimacons);
-        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(58+X_OFFSET, 15+Y_OFFSET, 33, 33));
+        layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 16+Y_OFFSET, 33, 33));
 
         weather_icon[0] = (unsigned char)wi_day_and_night;
         text_layer_set_text(moonLayer_IMG, weather_icon);
@@ -1008,7 +1014,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     }
   #else
     text_layer_set_font(moonLayer_IMG, pFontClimacons);
-    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(58+X_OFFSET, 15+Y_OFFSET, 33, 33));
+    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 16+Y_OFFSET, 33, 33));
 
     static int wi_counter = 33;
     wi_counter++; if (wi_counter>106) wi_counter = 33;
@@ -1023,7 +1029,7 @@ static void handle_second_tick(struct tm* current_time, TimeUnits units_changed)
     moon[0] = (unsigned char)(moonphase_char_number(moonphase_number));
 
     text_layer_set_font(moonLayer_IMG, pFontMoon);
-    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(51+X_OFFSET, 21+Y_OFFSET, 33, 33));
+    layer_set_frame(text_layer_get_layer(moonLayer_IMG), GRect(53+X_OFFSET, 22+Y_OFFSET, 33, 33));
     text_layer_set_text(moonLayer_IMG, moon);
     apply_color_profile();
   }
@@ -1596,6 +1602,7 @@ static void apply_color_profile(void){
   text_layer_set_text_color(transit_layer_1, textcolor_location);
   text_layer_set_text_color(transit_layer_2, textcolor_location);
   text_layer_set_text_color(transit_layer_3, textcolor_location);
+  text_layer_set_text_color(transit_layer_4, textcolor_location);
 
   #ifndef PBL_PLATFORM_APLITE
     text_layer_set_text_color(text_layer_health, textcolor_Steps);
@@ -1883,6 +1890,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       break;
     case KEY_TRANSIT_STOP_3:
       snprintf(transit_string_3, sizeof(transit_string_3), "%s", t->value->cstring);
+      break;
+    case KEY_TRANSIT_STOP_4:
+      snprintf(transit_string_4, sizeof(transit_string_4), "%s", t->value->cstring);
       break;
     case KEY_TIME_ZONE_NAME:
       snprintf(time_ZONE_NAME, sizeof(time_ZONE_NAME), "%s", t->value->cstring);
@@ -2220,6 +2230,7 @@ static void main_window_unload(Window *window) {
   text_layer_destroy(transit_layer_1);
   text_layer_destroy(transit_layer_2);
   text_layer_destroy(transit_layer_3);
+  text_layer_destroy(transit_layer_4);
   text_layer_destroy(text_TimeZone_layer);
   #ifndef PBL_PLATFORM_APLITE
     text_layer_destroy(text_layer_health);

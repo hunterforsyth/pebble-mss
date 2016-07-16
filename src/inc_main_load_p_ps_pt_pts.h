@@ -91,7 +91,7 @@
   set_cwLayer_size();
 
   // Moon phase
-  moonLayer_IMG = text_layer_create(GRect(54, 18, 33, 33));
+  moonLayer_IMG = text_layer_create(GRect(53, 18, 33, 33));
   text_layer_set_text_color(moonLayer_IMG, textcolor);
   text_layer_set_background_color(moonLayer_IMG, GColorClear);
   text_layer_set_font(moonLayer_IMG, pFontMoon);
@@ -137,10 +137,10 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_1));
 
   // Create String_2 Layer
-  weather_layer_7_string_2 = text_layer_create(GRect(53, 50, 144-53-1, 17)); //TODO
+  weather_layer_7_string_2 = text_layer_create(GRect(52, 50, 144-52, 17)); //TODO
   text_layer_set_background_color(weather_layer_7_string_2, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor);
-  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentCenter);
+  text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentRight);
   text_layer_set_text(weather_layer_7_string_2, "---");
   text_layer_set_font(weather_layer_7_string_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_2));
@@ -174,30 +174,39 @@
   #endif
 
   // Create Transit Layer 1
-  transit_layer_1 = text_layer_create(GRect(0, 16, 51, 16)); //TODO
+  transit_layer_1 = text_layer_create(GRect(0, 13, 51, 14)); //TODO
   text_layer_set_background_color(transit_layer_1, GColorClear);
   text_layer_set_text_color(transit_layer_1, textcolor);
   text_layer_set_text_alignment(transit_layer_1, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_1, "---");
-  text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_1));
 
   // Create Transit Layer 2
-  transit_layer_2 = text_layer_create(GRect(0, 32, 51, 16)); //TODO
+  transit_layer_2 = text_layer_create(GRect(0, 26, 51, 14)); //TODO
   text_layer_set_background_color(transit_layer_2, GColorClear);
   text_layer_set_text_color(transit_layer_2, textcolor);
   text_layer_set_text_alignment(transit_layer_2, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_2, "---");
-  text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_2));
 
   // Create Transit Layer 3
-  transit_layer_3 = text_layer_create(GRect(0, 48, 51, 16)); //TODO
+  transit_layer_3 = text_layer_create(GRect(0, 39, 51, 14)); //TODO
   text_layer_set_background_color(transit_layer_3, GColorClear);
   text_layer_set_text_color(transit_layer_3, textcolor);
   text_layer_set_text_alignment(transit_layer_3, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_3, "---");
-  text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_3));
+
+  // Create Transit Layer 4
+  transit_layer_4 = text_layer_create(GRect(0, 52, 51, 14)); //TODO
+  text_layer_set_background_color(transit_layer_4, GColorClear);
+  text_layer_set_text_color(transit_layer_4, textcolor);
+  text_layer_set_text_alignment(transit_layer_4, GTextAlignmentLeft);
+  text_layer_set_text(transit_layer_4, "---");
+  text_layer_set_font(transit_layer_4, fonts_get_system_font(FONT_KEY_GOTHIC_14_BOLD));
+	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_4));
 
   // --- END ---

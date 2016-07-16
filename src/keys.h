@@ -46,6 +46,7 @@
 #define KEY_TRANSIT_STOP_1     42
 #define KEY_TRANSIT_STOP_2     43
 #define KEY_TRANSIT_STOP_3     44
+#define KEY_TRANSIT_STOP_4     45
 
 #define KEY_WARN_LOCATION      50
 

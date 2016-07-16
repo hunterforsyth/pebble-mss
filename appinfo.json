@@ -53,7 +53,8 @@
         "KEY_WEATHER_UPDATE_INT": 7,
         "KEY_TRANSIT_STOP_1": 42,
         "KEY_TRANSIT_STOP_2": 43,
-        "KEY_TRANSIT_STOP_3": 44
+        "KEY_TRANSIT_STOP_3": 44,
+        "KEY_TRANSIT_STOP_4": 45
     },
     "capabilities": [
         "location",
