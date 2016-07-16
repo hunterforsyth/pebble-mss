@@ -503,9 +503,9 @@ void DisplayLastUpdated(void) {
     strcpy(battery_buffer_2, " ");
   }
   if (last_charge_state == 1){
-    snprintf(battery_buffer_1, sizeof(battery_buffer_1), "*%d%%\n%s", actual_battery_percent, battery_buffer_2);
+    snprintf(battery_buffer_1, sizeof(battery_buffer_1), "*%d%%", actual_battery_percent);
   } else {
-    snprintf(battery_buffer_1, sizeof(battery_buffer_1), "%d%%\n%s", actual_battery_percent, battery_buffer_2);
+    snprintf(battery_buffer_1, sizeof(battery_buffer_1), "%d%%", actual_battery_percent);
   }
   text_layer_set_text(battery_runtime_layer, battery_buffer_1);
 }
@@ -1188,7 +1188,7 @@ static void handle_battery(BatteryChargeState charge_state) {
 
   #ifdef PBL_PLATFORM_APLITE //only on SDK 2.x
     //GRect(41, 21, 38, 11): size of InverterLayer
-    layer_set_frame(inverter_layer_get_layer(s_battery_layer_fill), GRect(4, 21, (int)38*actual_battery_percent/100, 11));
+    layer_set_frame(inverter_layer_get_layer(s_battery_layer_fill), GRect(3, 1, (int)30*actual_battery_percent/100, 11));
     layer_set_hidden(inverter_layer_get_layer(s_battery_layer_fill), false);
     if (actual_battery_percent <= 20){
       if (!ColorProfile){
@@ -1208,7 +1208,7 @@ static void handle_battery(BatteryChargeState charge_state) {
       }
     }
   #else
-    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(4+X_OFFSET, 21+Y_OFFSET, (int)38*actual_battery_percent/100, 11));
+    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(3+X_OFFSET, 1+Y_OFFSET, (int)28*actual_battery_percent/100, 11));
     //layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(0, 0, 180, 180));
     layer_set_hidden(effect_layer_get_layer(s_battery_layer_fill), false);
 

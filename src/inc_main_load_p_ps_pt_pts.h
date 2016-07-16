@@ -53,27 +53,25 @@
   layer_add_child(main_window_layer, text_layer_get_layer(connection_layer));
 
   // Battery state / runtime:
-  battery_runtime_layer = text_layer_create(GRect(2, 15+2, 45, 15+20));
+  battery_runtime_layer = text_layer_create(GRect(2, -3, 32, 15+20));
   text_layer_set_text_color(battery_runtime_layer, textcolor);
   text_layer_set_background_color(battery_runtime_layer, GColorClear);
   text_layer_set_font(battery_runtime_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
   text_layer_set_text_alignment(battery_runtime_layer, GTextAlignmentCenter);
-  text_layer_set_text(battery_runtime_layer, "100%\n0:00 d");
+  text_layer_set_text(battery_runtime_layer, "100%");
   layer_add_child(main_window_layer, text_layer_get_layer(battery_runtime_layer));
 
   #ifdef PBL_PLATFORM_APLITE
     //fill battery with an InverterLayer
-    s_battery_layer_fill = inverter_layer_create(GRect(3, 21, 38, 11));
+    s_battery_layer_fill = inverter_layer_create(GRect(3, 2, 30, 11));
     layer_set_hidden(inverter_layer_get_layer(s_battery_layer_fill), true);
     layer_add_child(main_window_layer, inverter_layer_get_layer(s_battery_layer_fill));
   #else //else use effect layer on basalt
-    s_battery_layer_fill = effect_layer_create(GRect(3, 21, 38, 11));
+    s_battery_layer_fill = effect_layer_create(GRect(3, 2, 30, 11));
     effect_layer_add_effect(s_battery_layer_fill, effect_invert_color, (void *)0b00000000); //use global inverter color
     layer_set_hidden(effect_layer_get_layer(s_battery_layer_fill), true);
     layer_add_child(main_window_layer, effect_layer_get_layer(s_battery_layer_fill));
   #endif
-
-
 
   // Date text
   Date_Layer = text_layer_create(GRect(1, 63, 134 /* width */, 30 /* height */));
@@ -112,7 +110,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_1_temp));
 
   // Create location name Layer
-  weather_layer_3_location = text_layer_create(GRect(0, -3, 110, 17));
+  weather_layer_3_location = text_layer_create(GRect(39, -3, 70, 17));
   text_layer_set_background_color(weather_layer_3_location, GColorClear);
   text_layer_set_text_color(weather_layer_3_location, textcolor);
   text_layer_set_text_alignment(weather_layer_3_location, GTextAlignmentCenter);
@@ -134,7 +132,7 @@
   text_layer_set_background_color(weather_layer_7_string_1, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_1, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_1, GTextAlignmentRight);
-  text_layer_set_text(weather_layer_7_string_1, "---\n---");
+  text_layer_set_text(weather_layer_7_string_1, "---");
   text_layer_set_font(weather_layer_7_string_1, fonts_get_system_font(FONT_KEY_GOTHIC_14));
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_1));
 

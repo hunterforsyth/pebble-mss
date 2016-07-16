@@ -457,8 +457,6 @@ function SendToPebble(pos, use_default) {
                             break;
                         }
 
-
-
                         switch (configuration.weatherLine2){
                           case 1:
                             weather_Line_2 = conditions;
@@ -541,10 +539,7 @@ function SendToPebble(pos, use_default) {
                             break;
                         }
 
-
-
-
-                        var weather_string_1 = weather_Line_1 + "\n" + weather_Line_2;
+                        var weather_string_1 = weather_Line_1;
                         var weather_string_2 = weather_Line_3 + " / " + weather_Line_4; //TODO: what should be on this string?
                         if (configuration.weatherLine3 === 0) weather_string_2 = weather_Line_4;
                         if (configuration.weatherLine4 === 0) weather_string_2 = weather_Line_3;

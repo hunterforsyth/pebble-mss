@@ -12,12 +12,9 @@
   graphics_context_set_fill_color(ctx, GColorClear);
   graphics_context_set_stroke_color(ctx, background_color_lines);
   graphics_draw_line(ctx, GPoint(110,   0), GPoint(110,  14));
+  graphics_draw_line(ctx, GPoint(38,   0), GPoint(38,  14));
   graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
-  graphics_draw_line(ctx, GPoint( 49,  15), GPoint( 49,  49));
-  // graphics_draw_line(ctx, GPoint( 85,  15), GPoint( 85,  50));
-  graphics_draw_line(ctx, GPoint(  0,  50), GPoint( 49,  50));
   graphics_draw_line(ctx, GPoint(  0,  69), GPoint(168,  69));
-  // graphics_draw_line(ctx, GPoint(  0,  90), GPoint(168,  90));
   graphics_draw_line(ctx, GPoint(  0, 154), GPoint(168, 154));
 
   #ifndef PBL_PLATFORM_APLITE
@@ -54,7 +51,7 @@
       graphics_context_set_fill_color(ctx, background_color_location);
       graphics_context_set_stroke_color(ctx, background_color_location);
     }
-    graphics_fill_rect(ctx, GRect(0, 0, 110, 14), 0, 0);
+    graphics_fill_rect(ctx, GRect(39, 0, 71, 14), 0, 0);
 
     if (warning_color_last_update){
       graphics_context_set_fill_color(ctx, GColorRed);
@@ -86,17 +83,19 @@
   //draw battery:
   graphics_context_set_fill_color(ctx, bkgrcolor_bat);
   graphics_context_set_stroke_color(ctx, bkgrcolor_bat);
-  GRect layer_bounds = GRect(0, 15, 84-38+3, 49-17+3);
+  GRect layer_bounds = GRect(0, 0, 38, 14);
   graphics_fill_rect(ctx, layer_bounds, 0, 0);
+
+  #define BAT_YPOS 0
 
   graphics_context_set_fill_color(ctx, GColorClear);
   graphics_context_set_stroke_color(ctx, textcolor_bat);
-  graphics_draw_line(ctx, GPoint( 0+2, 0+2+17), GPoint(41+2, 0+2+17));
-  graphics_draw_line(ctx, GPoint( 0+2,14+2+17), GPoint(41+2,14+2+17));
-  graphics_draw_line(ctx, GPoint( 0+2, 0+2+17+Y_OFFSET), GPoint( 0+2,14+2+17));
+  graphics_draw_line(ctx, GPoint( 0+2, BAT_YPOS), GPoint(31+2, BAT_YPOS));
+  graphics_draw_line(ctx, GPoint( 0+2,14+BAT_YPOS-2), GPoint(31+2,14+BAT_YPOS-2));
+  graphics_draw_line(ctx, GPoint( 0+2, BAT_YPOS+Y_OFFSET), GPoint( 0+2,14+BAT_YPOS-2));
 
-  graphics_draw_line(ctx, GPoint(41+2, 0+2+17), GPoint(41+2, 4+2+17));
-  graphics_draw_line(ctx, GPoint(41+2,10+2+17), GPoint(41+2,14+2+17));
-  graphics_draw_line(ctx, GPoint(43+2, 4+2+17), GPoint(43+2,10+2+17));
-  graphics_draw_line(ctx, GPoint(41+2, 4+2+17), GPoint(43+2, 4+2+17));
-  graphics_draw_line(ctx, GPoint(41+2,10+2+17), GPoint(43+2,10+2+17));
+  graphics_draw_line(ctx, GPoint(31+2, BAT_YPOS), GPoint(31+2, 3+BAT_YPOS));
+  graphics_draw_line(ctx, GPoint(31+2,9+BAT_YPOS), GPoint(31+2,12+BAT_YPOS));
+  graphics_draw_line(ctx, GPoint(33+2, 3+BAT_YPOS), GPoint(33+2,9+BAT_YPOS));
+  graphics_draw_line(ctx, GPoint(31+2, 3+BAT_YPOS), GPoint(33+2, 3+BAT_YPOS));
+  graphics_draw_line(ctx, GPoint(31+2,9+BAT_YPOS), GPoint(33+2,9+BAT_YPOS));
