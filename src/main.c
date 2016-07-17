@@ -2163,7 +2163,7 @@ static void main_window_load(Window *window) {
     //app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
     app_message_open(200, 10); //in version 12.0, (200, 10) would be ok too. 500 just for security. Maybe 150 would also be OK. But not less!
   #else
-    app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
+    app_message_open(300, 10);
   #endif
 
 
