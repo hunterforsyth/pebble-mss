@@ -74,11 +74,11 @@
   #endif
 
   // Date text
-  Date_Layer = text_layer_create(GRect(1, 63, 134 /* width */, 30 /* height */));
+  Date_Layer = text_layer_create(GRect(0, 64, 144 /* width */, 30 /* height */));
   text_layer_set_text_color(Date_Layer, textcolor);
-  text_layer_set_background_color(Date_Layer, GColorClear );
-  text_layer_set_font(Date_Layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
-  text_layer_set_text_alignment(Date_Layer, GTextAlignmentLeft);
+  text_layer_set_background_color(Date_Layer, GColorClear);
+  text_layer_set_font(Date_Layer, fonts_get_system_font(FONT_KEY_GOTHIC_24));
+  text_layer_set_text_alignment(Date_Layer, GTextAlignmentCenter);
   layer_add_child(main_window_layer, text_layer_get_layer(Date_Layer));
 
   // Calendar Week
@@ -101,16 +101,16 @@
   // --- Weather Layers: ---
 
   // Create temperature Layer
-  weather_layer_1_temp = text_layer_create(GRect(84, 9, 144-86-2, 30));
+  weather_layer_1_temp = text_layer_create(GRect(82, 9, 144-83, 30));
   text_layer_set_background_color(weather_layer_1_temp, GColorClear);
   text_layer_set_text_color(weather_layer_1_temp, textcolor);
   text_layer_set_text_alignment(weather_layer_1_temp, GTextAlignmentRight);
   text_layer_set_text(weather_layer_1_temp, "---");
-  text_layer_set_font(weather_layer_1_temp, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD)); //FONT_KEY_BITHAM_30_BLACK
+  text_layer_set_font(weather_layer_1_temp, fonts_get_system_font(FONT_KEY_GOTHIC_28)); //FONT_KEY_BITHAM_30_BLACK
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_1_temp));
 
   // Create location name Layer
-  weather_layer_3_location = text_layer_create(GRect(39, -3, 70, 17));
+  weather_layer_3_location = text_layer_create(GRect(42, -3, 70, 17));
   text_layer_set_background_color(weather_layer_3_location, GColorClear);
   text_layer_set_text_color(weather_layer_3_location, textcolor);
   text_layer_set_text_alignment(weather_layer_3_location, GTextAlignmentCenter);
@@ -119,7 +119,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_3_location));
 
   // Create last updated Layer
-  weather_layer_4_last_update = text_layer_create(GRect(111, -3, 33, 17));
+  weather_layer_4_last_update = text_layer_create(GRect(115, -3, 29, 17));
   text_layer_set_background_color(weather_layer_4_last_update, GColorClear);
   text_layer_set_text_color(weather_layer_4_last_update, textcolor);
   text_layer_set_text_alignment(weather_layer_4_last_update, GTextAlignmentCenter);
@@ -128,7 +128,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_4_last_update));
 
   // Create String_1 Layer
-  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-3, 144-86-2, 30)); //TODO
+  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-3+1, 144-86-2, 30)); //TODO
   text_layer_set_background_color(weather_layer_7_string_1, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_1, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_1, GTextAlignmentRight);

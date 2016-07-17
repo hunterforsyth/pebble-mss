@@ -545,9 +545,9 @@ void DisplayData(void) {
 
 
   if (degree_f)
-    snprintf(buffer_1, sizeof(buffer_1), "%d°F", (int)(weather_TEMP*1.8+32));
+    snprintf(buffer_1, sizeof(buffer_1), "%d°f", (int)(weather_TEMP*1.8+32));
   else
-    snprintf(buffer_1, sizeof(buffer_1), "%d°C", weather_TEMP);
+    snprintf(buffer_1, sizeof(buffer_1), "%d°c", weather_TEMP);
   text_layer_set_text(weather_layer_1_temp, buffer_1);
 
   #ifndef PBL_PLATFORM_APLITE
@@ -1232,7 +1232,7 @@ static void handle_battery(BatteryChargeState charge_state) {
       }
     }
   #else
-    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(3+X_OFFSET, 1+Y_OFFSET, (int)28*actual_battery_percent/100, 11));
+    layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(3+X_OFFSET, 1+Y_OFFSET, (int)30*actual_battery_percent/100, 11));
     //layer_set_frame(effect_layer_get_layer(s_battery_layer_fill), GRect(0, 0, 180, 180));
     layer_set_hidden(effect_layer_get_layer(s_battery_layer_fill), false);
 

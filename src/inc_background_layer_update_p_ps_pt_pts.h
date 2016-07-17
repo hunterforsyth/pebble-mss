@@ -11,8 +11,8 @@
   //draw outlines:
   graphics_context_set_fill_color(ctx, GColorClear);
   graphics_context_set_stroke_color(ctx, background_color_lines);
-  graphics_draw_line(ctx, GPoint(110,   0), GPoint(110,  14));
-  graphics_draw_line(ctx, GPoint(38,   0), GPoint(38,  14));
+  graphics_draw_line(ctx, GPoint(114,   0), GPoint(114,  14));
+  graphics_draw_line(ctx, GPoint(39,   0), GPoint(39,  14));
   // graphics_draw_line(ctx, GPoint(51,   14), GPoint(51,  69));
   graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
   graphics_draw_line(ctx, GPoint(  0,  69), GPoint(168,  69));
@@ -52,7 +52,7 @@
       graphics_context_set_fill_color(ctx, background_color_location);
       graphics_context_set_stroke_color(ctx, background_color_location);
     }
-    graphics_fill_rect(ctx, GRect(39, 0, 71, 14), 0, 0);
+    graphics_fill_rect(ctx, GRect(40, 0, 74, 14), 0, 0);
 
     if (warning_color_last_update){
       graphics_context_set_fill_color(ctx, GColorRed);
@@ -61,7 +61,7 @@
       graphics_context_set_fill_color(ctx, background_color_last_update);
       graphics_context_set_stroke_color(ctx, background_color_last_update);
     }
-    graphics_fill_rect(ctx, GRect(111, 0, 33, 14), 0, 0);
+    graphics_fill_rect(ctx, GRect(115, 0, 29, 14), 0, 0);
 
   #endif
 
@@ -84,7 +84,7 @@
   //draw battery:
   graphics_context_set_fill_color(ctx, bkgrcolor_bat);
   graphics_context_set_stroke_color(ctx, bkgrcolor_bat);
-  GRect layer_bounds = GRect(0, 0, 38, 14);
+  GRect layer_bounds = GRect(0, 0, 39, 14);
   graphics_fill_rect(ctx, layer_bounds, 0, 0);
 
   #define BAT_YPOS 0

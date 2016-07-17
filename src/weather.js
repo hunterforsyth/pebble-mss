@@ -583,6 +583,8 @@ function SendToPebble(pos, use_default) {
                               "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4, 4)
                             };
 
+
+
                             // Send to Pebble
 
                             Pebble.sendAppMessage(dictionary,
@@ -616,7 +618,7 @@ function SendToPebble(pos, use_default) {
                           } else { //end: if (!WeatherDataJSON_error)
 
                             var weather_string_1 = WeatherDataJSON_error_str;
-                            var weather_string_2 = "E01: OWM Data error.";
+                            var weather_string_2 = "OWM Error.";
 
                             // Assemble dictionary using our keys
                             var dictionary = {
