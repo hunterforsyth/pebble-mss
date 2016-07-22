@@ -19,6 +19,8 @@ static Layer *s_image_layer_minute_2;
   static Layer *s_image_layer_second_2;
 #endif
 
+static BitmapLayer *transit_bmp_layer;
+
 
 static int digit_h_1 = 0;
 static int digit_h_2 = 0;
@@ -73,6 +75,7 @@ static time_t last_battery_period_time = 0; // last duration of charging/dischar
 #ifndef PBL_PLATFORM_APLITE
   static BitmapLayer *s_health_bmp_layer;
   static GBitmap *s_health_bitmap_sleep;
+  static GBitmap *transit_bitmap;
   static GBitmap *s_health_bitmap_steps;
   static TextLayer *text_layer_health; //Steps/Sleep
   static Layer *s_layer_health_up_down;
@@ -1750,6 +1753,8 @@ static void health_handler(HealthEventType event, void *context) {
         bitmap_layer_set_bitmap(s_health_bmp_layer, s_health_bitmap_steps);
         //APP_LOG(APP_LOG_LEVEL_INFO, "SET HEALTH_BMP_STEPS");
       }
+      bitmap_layer_set_bitmap(transit_bmp_layer, transit_bitmap);
+
       if (mask_avg & HealthServiceAccessibilityMaskAvailable) {
         if ((int)today > (int) average) health_higher_lower_than_avg =  1;
         if ((int)today < (int) average) health_higher_lower_than_avg = -1;
@@ -2089,6 +2094,7 @@ static void main_window_load(Window *window) {
   #ifndef PBL_PLATFORM_APLITE
     s_health_bitmap_sleep = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_SLEEP);
     s_health_bitmap_steps = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_STEPS);
+    transit_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TRANSIT);
   #endif
 
   #ifdef PBL_PLATFORM_APLITE
@@ -2207,6 +2213,7 @@ static void main_window_unload(Window *window) {
   #ifndef PBL_PLATFORM_APLITE
     bitmap_layer_destroy(s_health_bmp_layer);
     gbitmap_destroy(s_health_bitmap_sleep);
+    gbitmap_destroy(transit_bitmap);
     gbitmap_destroy(s_health_bitmap_steps);
   #endif
 

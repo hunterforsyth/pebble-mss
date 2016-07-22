@@ -4,10 +4,10 @@
 // Get STOP_ID's from nextbus.com
 
 var TRANSIT_PROVIDER = "ttc";
-var TRANSIT_STOP_ID_1 = "14538"; var TRANSIT_1_EXTRA_PARAMS = "&routeTag=63"; var TRANSIT_1_NAME = "63N";
-var TRANSIT_STOP_ID_2 = "13625"; var TRANSIT_2_EXTRA_PARAMS = "&routeTag=63"; var TRANSIT_2_NAME = "63S";
-var TRANSIT_STOP_ID_3 = "4155"; var TRANSIT_3_EXTRA_PARAMS = "&routeTag=504"; var TRANSIT_3_NAME = "504";
-var TRANSIT_STOP_ID_4 = "4155"; var TRANSIT_4_EXTRA_PARAMS = "&routeTag=514"; var TRANSIT_4_NAME = "514";
+var TRANSIT_STOP_ID_1 = "14538"; var TRANSIT_1_EXTRA_PARAMS = "&routeTag=63";
+var TRANSIT_STOP_ID_2 = "13625"; var TRANSIT_2_EXTRA_PARAMS = "&routeTag=63";
+var TRANSIT_STOP_ID_3 = "4155"; var TRANSIT_3_EXTRA_PARAMS = "&routeTag=504";
+var TRANSIT_STOP_ID_4 = "4155"; var TRANSIT_4_EXTRA_PARAMS = "&routeTag=514";
 
 var TRANSIT_SECONDS_REGEX_MATCH = /seconds=\"(.*?)\"/;
 var TRANSIT_URL = "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=" + TRANSIT_PROVIDER + "&stopId=";
@@ -577,16 +577,13 @@ function SendToPebble(pos, use_default) {
                               "KEY_SUN_SET_UNIX": sunset_unix, //both converted to local time zone
                               "KEY_WEATHER_DATA_TIME": time_of_last_data,
                               "KEY_WARN_LOCATION": warn_location,
-                              "KEY_TRANSIT_STOP_1": formatTransitTime(busTimes1, 1),
-                              "KEY_TRANSIT_STOP_2": formatTransitTime(busTimes2, 2),
-                              "KEY_TRANSIT_STOP_3": formatTransitTime(busTimes3, 3),
-                              "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4, 4)
+                              "KEY_TRANSIT_STOP_1": formatTransitTime(busTimes1),
+                              "KEY_TRANSIT_STOP_2": formatTransitTime(busTimes2),
+                              "KEY_TRANSIT_STOP_3": formatTransitTime(busTimes3),
+                              "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4)
                             };
 
-
-
                             // Send to Pebble
-
                             Pebble.sendAppMessage(dictionary,
                                                   function(e) {
                                                   },
@@ -806,19 +803,20 @@ Pebble.addEventListener("webviewclosed",
 );
 
 function formatTransitTime(timesList, favNumber) {
-  var stopNames = [TRANSIT_1_NAME, TRANSIT_2_NAME, TRANSIT_3_NAME, TRANSIT_4_NAME];
   if (timesList.length > 0) {
     var formattedTime = "??";
 
     try {
       var seconds = timesList[0].match(/\"(.*?)\"/)[1];
-      if (seconds > 60) {
+      if (seconds >= 600) {
+        formattedTime = Math.round(seconds / 60).toString();
+      } else if (seconds > 60) {
         formattedTime = Math.round(seconds / 60) + "m";
       } else {
         formattedTime = seconds + "s";
       }
     } catch (e) {}
 
-    return stopNames[favNumber - 1] + ": " + formattedTime;
+    return formattedTime;
   }
 }

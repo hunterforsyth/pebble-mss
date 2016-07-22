@@ -105,6 +105,15 @@
                     "chalk"
                 ],
                 "type": "bitmap"
+            },
+            {
+                "file": "images/transit.png",
+                "name": "IMAGE_TRANSIT",
+                "targetPlatforms": [
+                    "basalt",
+                    "chalk"
+                ],
+                "type": "bitmap"
             }
         ]
     },
