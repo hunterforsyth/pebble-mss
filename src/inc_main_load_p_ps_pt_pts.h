@@ -90,7 +90,7 @@
   set_cwLayer_size();
 
   // Moon phase
-  moonLayer_IMG = text_layer_create(GRect(53, 18, 33, 33));
+  moonLayer_IMG = text_layer_create(GRect(53, 17, 33, 33));
   text_layer_set_text_color(moonLayer_IMG, textcolor);
   text_layer_set_background_color(moonLayer_IMG, GColorClear);
   text_layer_set_font(moonLayer_IMG, pFontMoon);
@@ -100,7 +100,7 @@
   // --- Weather Layers: ---
 
   // Create temperature Layer
-  weather_layer_1_temp = text_layer_create(GRect(82, 10, 144-83, 30));
+  weather_layer_1_temp = text_layer_create(GRect(82, 9, 144-83, 30));
   text_layer_set_background_color(weather_layer_1_temp, GColorClear);
   text_layer_set_text_color(weather_layer_1_temp, textcolor);
   text_layer_set_text_alignment(weather_layer_1_temp, GTextAlignmentRight);
@@ -127,7 +127,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_4_last_update));
 
   // Create String_1 Layer
-  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-3+2, 144-86-2, 30)); //TODO
+  weather_layer_7_string_1 = text_layer_create(GRect(86, 54-15-3+1, 144-86-2, 30)); //TODO
   text_layer_set_background_color(weather_layer_7_string_1, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_1, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_1, GTextAlignmentRight);
@@ -136,7 +136,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(weather_layer_7_string_1));
 
   // Create String_2 Layer
-  weather_layer_7_string_2 = text_layer_create(GRect(54, 51, 144-54, 17)); //TODO
+  weather_layer_7_string_2 = text_layer_create(GRect(54, 50, 144-54, 17)); //TODO
   text_layer_set_background_color(weather_layer_7_string_2, GColorClear);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor);
   text_layer_set_text_alignment(weather_layer_7_string_2, GTextAlignmentCenter);
@@ -173,7 +173,7 @@
   #endif
 
   // Create Transit Title Layer
-  transit_title_layer = text_layer_create(GRect(0, 16, 70, 20)); //TODO
+  transit_title_layer = text_layer_create(GRect(0, 15, 70, 20)); //TODO
   text_layer_set_background_color(transit_title_layer, GColorClear);
   text_layer_set_text_color(transit_title_layer, GColorWhite);
   text_layer_set_text_alignment(transit_title_layer, GTextAlignmentLeft);
@@ -182,7 +182,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_title_layer));
 
   // Create Transit Layer 1
-  transit_layer_1 = text_layer_create(GRect(0, 32, 28, 20)); //TODO
+  transit_layer_1 = text_layer_create(GRect(0, 31, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_1, GColorClear);
   text_layer_set_text_color(transit_layer_1, GColorWhite);
   text_layer_set_text_alignment(transit_layer_1, GTextAlignmentLeft);
@@ -191,7 +191,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_1));
 
   // Create Transit Layer 2
-  transit_layer_2 = text_layer_create(GRect(27, 32, 28, 20)); //TODO
+  transit_layer_2 = text_layer_create(GRect(27, 31, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_2, GColorClear);
   text_layer_set_text_color(transit_layer_2, GColorWhite);
   text_layer_set_text_alignment(transit_layer_2, GTextAlignmentLeft);
@@ -200,7 +200,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_2));
 
   // Create Transit Layer 3
-  transit_layer_3 = text_layer_create(GRect(0, 47, 28, 20)); //TODO
+  transit_layer_3 = text_layer_create(GRect(0, 46, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_3, GColorClear);
   text_layer_set_text_color(transit_layer_3, GColorWhite);
   text_layer_set_text_alignment(transit_layer_3, GTextAlignmentLeft);
@@ -209,7 +209,7 @@
 	layer_add_child(main_window_layer, text_layer_get_layer(transit_layer_3));
 
   // Create Transit Layer 4
-  transit_layer_4 = text_layer_create(GRect(27, 47, 28, 20)); //TODO
+  transit_layer_4 = text_layer_create(GRect(27, 46, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_4, GColorClear);
   text_layer_set_text_color(transit_layer_4, GColorWhite);
   text_layer_set_text_alignment(transit_layer_4, GTextAlignmentLeft);
