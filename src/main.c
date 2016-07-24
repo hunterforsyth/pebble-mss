@@ -53,6 +53,7 @@ static TextLayer *weather_layer_4_last_update; // Time of last data / time since
 static TextLayer *weather_layer_7_string_1; //configurable, under actual temperature, 2 lines
 static TextLayer *weather_layer_7_string_2; //configurable, under moon and battery info, up to 2 infos in one line
 
+static TextLayer *transit_title_layer;
 static TextLayer *transit_layer_1;
 static TextLayer *transit_layer_2;
 static TextLayer *transit_layer_3;
@@ -75,7 +76,6 @@ static time_t last_battery_period_time = 0; // last duration of charging/dischar
 #ifndef PBL_PLATFORM_APLITE
   static BitmapLayer *s_health_bmp_layer;
   static GBitmap *s_health_bitmap_sleep;
-  static GBitmap *transit_bitmap;
   static GBitmap *s_health_bitmap_steps;
   static TextLayer *text_layer_health; //Steps/Sleep
   static Layer *s_layer_health_up_down;
@@ -97,6 +97,10 @@ static char transit_string_1[32];
 static char transit_string_2[32];
 static char transit_string_3[32];
 static char transit_string_4[32];
+static int transit_secs_1 = 0;
+static int transit_secs_2 = 0;
+static int transit_secs_3 = 0;
+static int transit_secs_4 = 0;
 static char time_ZONE_NAME[10];
 static time_t sun_rise_unix_loc = 0;
 static time_t sun_set_unix_loc  = 0;
@@ -316,6 +320,14 @@ void LoadData(void) {
   if (persist_exists(key)) persist_read_string(key, transit_string_3, sizeof(transit_string_3));
   key = KEY_TRANSIT_STOP_4;
   if (persist_exists(key)) persist_read_string(key, transit_string_4, sizeof(transit_string_4));
+  key = KEY_TRANSIT_STOP_1_SECS;
+  if (persist_exists(key)) transit_secs_1 = persist_read_int(key);
+  key = KEY_TRANSIT_STOP_2_SECS;
+  if (persist_exists(key)) transit_secs_2 = persist_read_int(key);
+  key = KEY_TRANSIT_STOP_3_SECS;
+  if (persist_exists(key)) transit_secs_3 = persist_read_int(key);
+  key = KEY_TRANSIT_STOP_4_SECS;
+  if (persist_exists(key)) transit_secs_4 = persist_read_int(key);
 
   key = KEY_TIME_LAST_UPDATE;
   if (persist_exists(key)) phone_last_updated = (time_t)(persist_read_int(key));
@@ -419,6 +431,11 @@ void SaveData(void) {
   persist_write_string (KEY_TRANSIT_STOP_2, transit_string_2);
   persist_write_string (KEY_TRANSIT_STOP_3, transit_string_3);
   persist_write_string (KEY_TRANSIT_STOP_4, transit_string_4);
+
+  persist_write_int (KEY_TRANSIT_STOP_1_SECS, transit_secs_1);
+  persist_write_int (KEY_TRANSIT_STOP_2_SECS, transit_secs_2);
+  persist_write_int (KEY_TRANSIT_STOP_3_SECS, transit_secs_3);
+  persist_write_int (KEY_TRANSIT_STOP_4_SECS, transit_secs_4);
 
   persist_write_int    (KEY_TIME_LAST_UPDATE,  (int)(phone_last_updated));
   persist_write_int    (KEY_WEATHER_DATA_TIME, (int)station_data_last_updated);
@@ -590,6 +607,30 @@ void DisplayData(void) {
     text_layer_set_text_color(weather_layer_1_temp, textcolor_weather_int);
   } else {
     text_layer_set_text_color(weather_layer_1_temp, textcolor_weather);
+  }
+
+  if (transit_secs_1 > 360) {
+    text_layer_set_text_color(transit_layer_1, GColorFolly);
+  } else {
+    text_layer_set_text_color(transit_layer_1, GColorWhite);
+  }
+
+  if (transit_secs_2 > 360) {
+    text_layer_set_text_color(transit_layer_2, GColorFolly);
+  } else {
+    text_layer_set_text_color(transit_layer_2, GColorWhite);
+  }
+
+  if (transit_secs_3 > 360) {
+    text_layer_set_text_color(transit_layer_3, GColorFolly);
+  } else {
+    text_layer_set_text_color(transit_layer_3, GColorWhite);
+  }
+
+  if (transit_secs_4 > 360) {
+    text_layer_set_text_color(transit_layer_4, GColorFolly);
+  } else {
+    text_layer_set_text_color(transit_layer_4, GColorWhite);
   }
   #endif
 
@@ -1244,13 +1285,13 @@ static void handle_battery(BatteryChargeState charge_state) {
       if (actual_battery_percent > 20){
         variable_color = 0b11000000; // 40-100 %
       } else {
-        variable_color = 0b11110000; //  0 % -  20 %  red (GColorRed)
+        variable_color = 0b11110001; //  0 % -  20 %  red (GColorRed)
       }
     #else
       if (actual_battery_percent > 20){
         variable_color = 0b11000000; // 30-100 %
       } else {
-        variable_color = 0b11110000; //  0 % -  10 %  red (GColorRed)
+        variable_color = 0b11110001; //  0 % -  10 %  red (GColorRed)
       }
     #endif
 
@@ -1602,10 +1643,6 @@ static void apply_color_profile(void){
   text_layer_set_text_color(weather_layer_7_string_1, textcolor_weather);
   text_layer_set_text_color(weather_layer_7_string_2, textcolor_weather);
   text_layer_set_text_color(text_TimeZone_layer, textcolor_tz);
-  text_layer_set_text_color(transit_layer_1, textcolor_location);
-  text_layer_set_text_color(transit_layer_2, textcolor_location);
-  text_layer_set_text_color(transit_layer_3, textcolor_location);
-  text_layer_set_text_color(transit_layer_4, textcolor_location);
 
   #ifndef PBL_PLATFORM_APLITE
     text_layer_set_text_color(text_layer_health, textcolor_Steps);
@@ -1753,7 +1790,6 @@ static void health_handler(HealthEventType event, void *context) {
         bitmap_layer_set_bitmap(s_health_bmp_layer, s_health_bitmap_steps);
         //APP_LOG(APP_LOG_LEVEL_INFO, "SET HEALTH_BMP_STEPS");
       }
-      bitmap_layer_set_bitmap(transit_bmp_layer, transit_bitmap);
 
       if (mask_avg & HealthServiceAccessibilityMaskAvailable) {
         if ((int)today > (int) average) health_higher_lower_than_avg =  1;
@@ -1898,6 +1934,18 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       break;
     case KEY_TRANSIT_STOP_4:
       snprintf(transit_string_4, sizeof(transit_string_4), "%s", t->value->cstring);
+      break;
+    case KEY_TRANSIT_STOP_1_SECS:
+      transit_secs_1 = (int)t->value->int32;
+      break;
+    case KEY_TRANSIT_STOP_2_SECS:
+      transit_secs_2 = (int)t->value->int32;
+      break;
+    case KEY_TRANSIT_STOP_3_SECS:
+      transit_secs_3 = (int)t->value->int32;
+      break;
+    case KEY_TRANSIT_STOP_4_SECS:
+      transit_secs_4 = (int)t->value->int32;
       break;
     case KEY_TIME_ZONE_NAME:
       snprintf(time_ZONE_NAME, sizeof(time_ZONE_NAME), "%s", t->value->cstring);
@@ -2094,7 +2142,6 @@ static void main_window_load(Window *window) {
   #ifndef PBL_PLATFORM_APLITE
     s_health_bitmap_sleep = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_SLEEP);
     s_health_bitmap_steps = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_HEALTH_STEPS);
-    transit_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_TRANSIT);
   #endif
 
   #ifdef PBL_PLATFORM_APLITE
@@ -2213,7 +2260,6 @@ static void main_window_unload(Window *window) {
   #ifndef PBL_PLATFORM_APLITE
     bitmap_layer_destroy(s_health_bmp_layer);
     gbitmap_destroy(s_health_bitmap_sleep);
-    gbitmap_destroy(transit_bitmap);
     gbitmap_destroy(s_health_bitmap_steps);
   #endif
 

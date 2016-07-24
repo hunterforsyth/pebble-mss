@@ -44,8 +44,8 @@
 
 
     if (warning_color_location == 1){
-      graphics_context_set_fill_color(ctx, GColorOrange);
-      graphics_context_set_stroke_color(ctx, GColorOrange);
+      graphics_context_set_fill_color(ctx, GColorMidnightGreen);
+      graphics_context_set_stroke_color(ctx, GColorMidnightGreen);
     } else if (warning_color_location == 2){
       graphics_context_set_fill_color(ctx, GColorBlack);
       graphics_context_set_stroke_color(ctx, GColorBlack);
@@ -56,8 +56,8 @@
     graphics_fill_rect(ctx, GRect(38, 0, 77, 14), 0, 0);
 
     if (warning_color_last_update){
-      graphics_context_set_fill_color(ctx, GColorOrange);
-      graphics_context_set_stroke_color(ctx, GColorOrange);
+      graphics_context_set_fill_color(ctx, GColorMidnightGreen);
+      graphics_context_set_stroke_color(ctx, GColorMidnightGreen);
     } else {
       graphics_context_set_fill_color(ctx, background_color_last_update);
       graphics_context_set_stroke_color(ctx, background_color_last_update);

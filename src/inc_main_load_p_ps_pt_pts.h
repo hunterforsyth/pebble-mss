@@ -26,11 +26,6 @@
   layer_add_child(main_window_layer, s_image_layer_second_2);
 #endif
 
-  // Transit icon
-  transit_bmp_layer = bitmap_layer_create(GRect(12,17,20,20));
-  bitmap_layer_set_alignment(transit_bmp_layer, GAlignTopLeft);
-  layer_add_child(main_window_layer, bitmap_layer_get_layer(transit_bmp_layer));
-
   GColor textcolor = GColorWhite;
 
   // Sunrise Text
@@ -177,10 +172,19 @@
     layer_add_child(main_window_layer, s_layer_health_up_down);
   #endif
 
+  // Create Transit Title Layer
+  transit_title_layer = text_layer_create(GRect(0, 16, 70, 20)); //TODO
+  text_layer_set_background_color(transit_title_layer, GColorClear);
+  text_layer_set_text_color(transit_title_layer, GColorWhite);
+  text_layer_set_text_alignment(transit_title_layer, GTextAlignmentLeft);
+  text_layer_set_text(transit_title_layer, "TTC");
+  text_layer_set_font(transit_title_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
+	layer_add_child(main_window_layer, text_layer_get_layer(transit_title_layer));
+
   // Create Transit Layer 1
   transit_layer_1 = text_layer_create(GRect(0, 32, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_1, GColorClear);
-  text_layer_set_text_color(transit_layer_1, textcolor);
+  text_layer_set_text_color(transit_layer_1, GColorWhite);
   text_layer_set_text_alignment(transit_layer_1, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_1, "--");
   text_layer_set_font(transit_layer_1, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
@@ -189,7 +193,7 @@
   // Create Transit Layer 2
   transit_layer_2 = text_layer_create(GRect(27, 32, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_2, GColorClear);
-  text_layer_set_text_color(transit_layer_2, textcolor);
+  text_layer_set_text_color(transit_layer_2, GColorWhite);
   text_layer_set_text_alignment(transit_layer_2, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_2, "--");
   text_layer_set_font(transit_layer_2, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
@@ -198,7 +202,7 @@
   // Create Transit Layer 3
   transit_layer_3 = text_layer_create(GRect(0, 47, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_3, GColorClear);
-  text_layer_set_text_color(transit_layer_3, textcolor);
+  text_layer_set_text_color(transit_layer_3, GColorWhite);
   text_layer_set_text_alignment(transit_layer_3, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_3, "--");
   text_layer_set_font(transit_layer_3, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
@@ -207,7 +211,7 @@
   // Create Transit Layer 4
   transit_layer_4 = text_layer_create(GRect(27, 47, 28, 20)); //TODO
   text_layer_set_background_color(transit_layer_4, GColorClear);
-  text_layer_set_text_color(transit_layer_4, textcolor);
+  text_layer_set_text_color(transit_layer_4, GColorWhite);
   text_layer_set_text_alignment(transit_layer_4, GTextAlignmentLeft);
   text_layer_set_text(transit_layer_4, "--");
   text_layer_set_font(transit_layer_4, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));

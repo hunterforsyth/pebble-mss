@@ -54,7 +54,11 @@
         "KEY_TRANSIT_STOP_1": 42,
         "KEY_TRANSIT_STOP_2": 43,
         "KEY_TRANSIT_STOP_3": 44,
-        "KEY_TRANSIT_STOP_4": 45
+        "KEY_TRANSIT_STOP_4": 45,
+        "KEY_TRANSIT_STOP_1_SECS": 46,
+        "KEY_TRANSIT_STOP_2_SECS": 47,
+        "KEY_TRANSIT_STOP_3_SECS": 48,
+        "KEY_TRANSIT_STOP_4_SECS": 49
     },
     "capabilities": [
         "location",
@@ -100,15 +104,6 @@
             {
                 "file": "images/Soles-feet-30x35px.png",
                 "name": "IMAGE_HEALTH_STEPS",
-                "targetPlatforms": [
-                    "basalt",
-                    "chalk"
-                ],
-                "type": "bitmap"
-            },
-            {
-                "file": "images/transit.png",
-                "name": "IMAGE_TRANSIT",
                 "targetPlatforms": [
                     "basalt",
                     "chalk"

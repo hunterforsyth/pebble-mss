@@ -580,7 +580,11 @@ function SendToPebble(pos, use_default) {
                               "KEY_TRANSIT_STOP_1": formatTransitTime(busTimes1),
                               "KEY_TRANSIT_STOP_2": formatTransitTime(busTimes2),
                               "KEY_TRANSIT_STOP_3": formatTransitTime(busTimes3),
-                              "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4)
+                              "KEY_TRANSIT_STOP_4": formatTransitTime(busTimes4),
+                              "KEY_TRANSIT_STOP_1_SECS": getSeconds(busTimes1),
+                              "KEY_TRANSIT_STOP_2_SECS": getSeconds(busTimes2),
+                              "KEY_TRANSIT_STOP_3_SECS": getSeconds(busTimes3),
+                              "KEY_TRANSIT_STOP_4_SECS": getSeconds(busTimes4)
                             };
 
                             // Send to Pebble
@@ -802,16 +806,21 @@ Pebble.addEventListener("webviewclosed",
   }
 );
 
+function getSeconds(timesList) {
+  return parseInt(timesList[0].match(/\"(.*?)\"/)[1]);
+}
+
 function formatTransitTime(timesList, favNumber) {
   if (timesList.length > 0) {
     var formattedTime = "??";
 
     try {
-      var seconds = timesList[0].match(/\"(.*?)\"/)[1];
-      if (seconds >= 600) {
-        formattedTime = Math.round(seconds / 60).toString();
+      var seconds = getSeconds(timesList);
+      var mins = Math.round(seconds / 60);
+      if (mins >= 10) {
+        formattedTime = mins.toString();
       } else if (seconds > 60) {
-        formattedTime = Math.round(seconds / 60) + "m";
+        formattedTime = mins + "m";
       } else {
         formattedTime = seconds + "s";
       }
