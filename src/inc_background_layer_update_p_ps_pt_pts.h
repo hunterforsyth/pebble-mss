@@ -11,11 +11,11 @@
   //draw outlines:
   graphics_context_set_fill_color(ctx, GColorClear);
   graphics_context_set_stroke_color(ctx, background_color_lines);
-  graphics_draw_line(ctx, GPoint(114,   0), GPoint(114,  14));
-  graphics_draw_line(ctx, GPoint(39,   0), GPoint(39,  14));
+  // graphics_draw_line(ctx, GPoint(114,   0), GPoint(114,  14));
+  // graphics_draw_line(ctx, GPoint(39,   0), GPoint(39,  14));
   // graphics_draw_line(ctx, GPoint(51,   14), GPoint(51,  69));
   // graphics_draw_line(ctx, GPoint(  4,  32), GPoint(42,  32));
-  graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
+  // graphics_draw_line(ctx, GPoint(  0,  14), GPoint(168,  14));
   graphics_draw_line(ctx, GPoint(  0,  69), GPoint(168,  69));
   graphics_draw_line(ctx, GPoint(  0, 154), GPoint(168, 154));
 
@@ -44,8 +44,8 @@
 
 
     if (warning_color_location == 1){
-      graphics_context_set_fill_color(ctx, GColorRed);
-      graphics_context_set_stroke_color(ctx, GColorRed);
+      graphics_context_set_fill_color(ctx, GColorOrange);
+      graphics_context_set_stroke_color(ctx, GColorOrange);
     } else if (warning_color_location == 2){
       graphics_context_set_fill_color(ctx, GColorBlack);
       graphics_context_set_stroke_color(ctx, GColorBlack);
@@ -53,11 +53,11 @@
       graphics_context_set_fill_color(ctx, background_color_location);
       graphics_context_set_stroke_color(ctx, background_color_location);
     }
-    graphics_fill_rect(ctx, GRect(40, 0, 74, 14), 0, 0);
+    graphics_fill_rect(ctx, GRect(38, 0, 77, 14), 0, 0);
 
     if (warning_color_last_update){
-      graphics_context_set_fill_color(ctx, GColorRed);
-      graphics_context_set_stroke_color(ctx, GColorRed);
+      graphics_context_set_fill_color(ctx, GColorOrange);
+      graphics_context_set_stroke_color(ctx, GColorOrange);
     } else {
       graphics_context_set_fill_color(ctx, background_color_last_update);
       graphics_context_set_stroke_color(ctx, background_color_last_update);
@@ -85,7 +85,7 @@
   //draw battery:
   graphics_context_set_fill_color(ctx, bkgrcolor_bat);
   graphics_context_set_stroke_color(ctx, bkgrcolor_bat);
-  GRect layer_bounds = GRect(0, 0, 39, 14);
+  GRect layer_bounds = GRect(0, 0, 38, 14);
   graphics_fill_rect(ctx, layer_bounds, 0, 0);
 
   #define BAT_YPOS 0

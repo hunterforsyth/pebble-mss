@@ -1242,13 +1242,13 @@ static void handle_battery(BatteryChargeState charge_state) {
     uint8_t variable_color = 0;
     #ifdef PBL_PLATFORM_CHALK
       if (actual_battery_percent > 20){
-        variable_color = 0b11000100; // 40-100 %
+        variable_color = 0b11000000; // 40-100 %
       } else {
         variable_color = 0b11110000; //  0 % -  20 %  red (GColorRed)
       }
     #else
       if (actual_battery_percent > 20){
-        variable_color = 0b11000100; // 30-100 %
+        variable_color = 0b11000000; // 30-100 %
       } else {
         variable_color = 0b11110000; //  0 % -  10 %  red (GColorRed)
       }
@@ -1257,7 +1257,7 @@ static void handle_battery(BatteryChargeState charge_state) {
 
     if (ColorProfile == 0) {
       textcolor_bat_uint8 = 0b11111111; //white
-      bkgrcolor_bat_uint8 = 0b11000101; //black
+      bkgrcolor_bat_uint8 = 0b11000000; //black
     } else if (ColorProfile == 1) {
       textcolor_bat_uint8 = 0b11000000; //black
       bkgrcolor_bat_uint8 = 0b11111111; //white

@@ -452,10 +452,10 @@
       background_color_status      = GColorBlack;
 
       textcolor_location           = GColorWhite;
-      background_color_location    = GColorMidnightGreen;
+      background_color_location    = GColorBlack;
 
       textcolor_last_update        = GColorWhite;
-      background_color_last_update = GColorMidnightGreen;
+      background_color_last_update = GColorBlack;
 
       background_color_lines       = GColorWhite;
     }
