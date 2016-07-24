@@ -609,25 +609,33 @@ void DisplayData(void) {
     text_layer_set_text_color(weather_layer_1_temp, textcolor_weather);
   }
 
-  if (transit_secs_1 > 360) {
+  if (transit_secs_1 > 900) {
+    text_layer_set_text_color(transit_layer_1, GColorDarkGray);
+  } else if (transit_secs_1 > 300) {
     text_layer_set_text_color(transit_layer_1, GColorFolly);
   } else {
     text_layer_set_text_color(transit_layer_1, GColorWhite);
   }
 
-  if (transit_secs_2 > 360) {
+  if (transit_secs_2 > 900) {
+    text_layer_set_text_color(transit_layer_2, GColorDarkGray);
+  } else if (transit_secs_2 > 300) {
     text_layer_set_text_color(transit_layer_2, GColorFolly);
   } else {
     text_layer_set_text_color(transit_layer_2, GColorWhite);
   }
 
-  if (transit_secs_3 > 360) {
+  if (transit_secs_3 > 900) {
+    text_layer_set_text_color(transit_layer_3, GColorDarkGray);
+  } else if (transit_secs_3 > 300) {
     text_layer_set_text_color(transit_layer_3, GColorFolly);
   } else {
     text_layer_set_text_color(transit_layer_3, GColorWhite);
   }
 
-  if (transit_secs_4 > 360) {
+  if (transit_secs_4 > 900) {
+    text_layer_set_text_color(transit_layer_4, GColorDarkGray);
+  } else if (transit_secs_4 > 300) {
     text_layer_set_text_color(transit_layer_4, GColorFolly);
   } else {
     text_layer_set_text_color(transit_layer_4, GColorWhite);
